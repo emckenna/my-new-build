@@ -1,0 +1,148 @@
+{
+  "_meta": {
+    "generated": "2026-05-08",
+    "schema_version": "1.0"
+  },
+  "build": {
+    "name": "Whisper Beast 2026",
+    "description": "Whisper-quiet 1440p gaming, same-box Twitch streaming via RTX 5080 NVENC, and Portal SDK dev build. Target <26 dBA under load. AM5 platform for 5+ year upgrade path. Wired 2.5GbE for low-latency gaming.",
+    "budget": 3100,
+    "last_updated": "2026-05-08"
+  },
+  "parts": [
+    {
+      "id": "cpu",
+      "name": "AMD Ryzen 7 9850X3D",
+      "category": "cpu",
+      "description": "New gaming king on AM5 (launched Jan 2026). +400MHz boost over 9800X3D. 96MB L3 cache excels in extraction-shooter and CPU-bound workloads. 2-5% faster than 9800X3D in Arc Raiders scenarios.",
+      "target_price": 499,
+      "model_id": "ryzen_7_9850x3d",
+      "market_url": "https://www.pcprice.watch/data/ryzen_7_9850x3d_market_data.json",
+      "last_price": null,
+      "last_checked": null,
+      "alt_urls": []
+    },
+    {
+      "id": "gpu",
+      "name": "MSI RTX 5080 Ventus 3X OC 16GB",
+      "category": "video card",
+      "description": "Primary gaming GPU and same-box stream encoder. 170-220+ FPS at 1440p Ultra with DLSS4/MFG. 9th-gen NVENC handles 1080p60/1440p60 OBS encode with negligible gaming impact. ~24 dBA load with custom fan curve. Street price stabilized ~$1,249 vs $999 MSRP.",
+      "target_price": 999,
+      "model_id": "rtx5080",
+      "market_url": "https://www.pcprice.watch/data/rtx5080_market_data.json",
+      "last_price": null,
+      "last_checked": null,
+      "alt_urls": []
+    },
+    {
+      "id": "ram",
+      "name": "Corsair Vengeance 64GB DDR5-6000 CL40",
+      "category": "memory",
+      "description": "64GB for simultaneous Arc Raiders, OBS, SDK dev, browser, and Discord with no constraint. DDR5-6000 is the Zen5 sweet spot — speed above this gives <1% gain.",
+      "target_price": 196,
+      "model_id": "ddr5_64gb_6000",
+      "market_url": "https://www.pcprice.watch/data/ddr5_64gb_6000_market_data.json",
+      "last_price": null,
+      "last_checked": null,
+      "alt_urls": []
+    }
+  ],
+  "extras": [
+    {
+      "id": "cooler",
+      "name": "Arctic Liquid Freezer III 360",
+      "category": "cpu cooler",
+      "description": "Quietest 360mm AIO available. <22 dBA idle, ~25 dBA load. Keeps 9850X3D under 65C.",
+      "fixed_price": 130
+    },
+    {
+      "id": "motherboard",
+      "name": "ASRock X870 LiveMixer WiFi",
+      "category": "motherboard",
+      "description": "X870 chipset, PCIe 5.0. 25 USB ports (14 rear including USB4). Onboard 2.5GbE wired Ethernet — mandatory for low-latency Arc Raiders. WiFi as fallback only.",
+      "fixed_price": 230
+    },
+    {
+      "id": "storage",
+      "name": "WD Black SN850X 4TB NVMe Gen4",
+      "category": "storage",
+      "description": "7,000/6,600 MB/s. Fast game loads and Portal SDK map compiles. Old SSDs reused for 12TB+ total.",
+      "fixed_price": 260
+    },
+    {
+      "id": "case",
+      "name": "Fractal Design Define 7 Compact",
+      "category": "case",
+      "description": "Sound-dampened bitumen/wool panels. Best-in-class silence with 2x Dynamic fans included.",
+      "fixed_price": 140
+    },
+    {
+      "id": "psu",
+      "name": "Corsair RM1000e 1000W 80+ Gold",
+      "category": "power supply",
+      "description": "Zero-RPM fan mode below 40% load — completely silent at idle/light gaming. Headroom for future GPU upgrades.",
+      "fixed_price": 150
+    },
+    {
+      "id": "fans",
+      "name": "Noctua NF-A12x25 PWM 3-Pack",
+      "category": "fans",
+      "description": "Sub-20 dBA case airflow. Replaces stock fans for ultimate quiet operation.",
+      "fixed_price": 80
+    },
+    {
+      "id": "os",
+      "name": "Windows 11 Pro",
+      "category": "os",
+      "description": "Required for DX12 Ultimate and Arc Raiders optimization.",
+      "fixed_price": 140
+    }
+  ],
+  "prebuilts": [
+    {
+      "id": "skytech-32",
+      "name": "Skytech King 95 (32GB/2TB)",
+      "cpu": "Ryzen 7 9800X3D",
+      "ram": "32GB",
+      "storage": "2TB",
+      "price": 2999,
+      "note": "Half RAM, half storage, older CPU"
+    },
+    {
+      "id": "skytech-64",
+      "name": "Skytech King 95 (64GB/4TB)",
+      "cpu": "Ryzen 7 9800X3D",
+      "ram": "64GB",
+      "storage": "4TB",
+      "price": 3699,
+      "note": "Up to $1,020 premium over custom, older CPU"
+    },
+    {
+      "id": "cyberpower",
+      "name": "CyberPowerPC Gamer Supreme",
+      "cpu": "Ryzen 7 9800X3D",
+      "ram": "32GB",
+      "storage": "2TB",
+      "price": 3000,
+      "note": "Half RAM, half storage, older CPU"
+    },
+    {
+      "id": "empowered",
+      "name": "Empowered PC Sentinel",
+      "cpu": "Ryzen 7 9800X3D",
+      "ram": "64GB",
+      "storage": "2TB",
+      "price": 3350,
+      "note": "Half storage, older CPU"
+    },
+    {
+      "id": "alienware",
+      "name": "Alienware Aurora ACT1250",
+      "cpu": "Intel Core Ultra 9 285",
+      "ram": "32GB",
+      "storage": "1TB",
+      "price": 3499,
+      "note": "Intel platform, half RAM, quarter storage"
+    }
+  ]
+}

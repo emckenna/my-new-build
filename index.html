@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Whisper Beast 2026 — Build Tracker</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      background: #0f1117;
+      color: #e2e8f0;
+      min-height: 100vh;
+      padding: 2rem 1rem;
+    }
+
+    h1 { font-size: 1.5rem; font-weight: 700; margin-bottom: 0.25rem; }
+    .subtitle { color: #64748b; font-size: 0.875rem; margin-bottom: 2rem; }
+
+    .summary {
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 2rem;
+    }
+
+    .card {
+      background: #1e2330;
+      border: 1px solid #2d3748;
+      border-radius: 0.75rem;
+      padding: 1rem 1.5rem;
+      min-width: 160px;
+    }
+    .card .label { font-size: 0.75rem; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em; }
+    .card .value { font-size: 1.75rem; font-weight: 700; margin-top: 0.25rem; }
+    .card .value.green { color: #4ade80; }
+    .card .value.red { color: #f87171; }
+    .card .value.neutral { color: #e2e8f0; }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    th {
+      text-align: left;
+      padding: 0.6rem 0.75rem;
+      border-bottom: 1px solid #2d3748;
+      color: #64748b;
+      font-weight: 500;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    td { padding: 0.75rem; border-bottom: 1px solid #1a2030; }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: #1a2030; }
+
+    .badge {
+      display: inline-block;
+      padding: 0.2rem 0.5rem;
+      border-radius: 0.375rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+    .badge.up { background: #3f1515; color: #f87171; }
+    .badge.down { background: #14291f; color: #4ade80; }
+    .badge.flat { background: #1e2330; color: #64748b; }
+    .badge.new { background: #1e2a3a; color: #60a5fa; }
+    .badge.fixed { background: #1e2330; color: #94a3b8; }
+
+    .section-label {
+      font-size: 0.75rem;
+      color: #64748b;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 1.25rem 0.75rem 0.5rem;
+    }
+
+    .prebuilts {
+      margin-top: 2rem;
+    }
+    .prebuilts h2 {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: #94a3b8;
+    }
+
+    .meta { margin-top: 2rem; font-size: 0.75rem; color: #4a5568; }
+
+    #error { color: #f87171; padding: 1rem; }
+  </style>
+</head>
+<body>
+  <h1 id="build-name">Loading...</h1>
+  <div class="subtitle" id="build-desc"></div>
+
+  <div class="summary">
+    <div class="card">
+      <div class="label">Build Total</div>
+      <div class="value neutral" id="total">—</div>
+    </div>
+    <div class="card">
+      <div class="label">Budget</div>
+      <div class="value neutral" id="budget">—</div>
+    </div>
+    <div class="card">
+      <div class="label">vs Budget</div>
+      <div class="value neutral" id="vs-budget">—</div>
+    </div>
+    <div class="card">
+      <div class="label">Last Updated</div>
+      <div class="value neutral" style="font-size:1rem;padding-top:0.4rem" id="last-updated">—</div>
+    </div>
+  </div>
+
+  <div id="error"></div>
+
+  <table id="parts-table">
+    <thead>
+      <tr>
+        <th>Part</th>
+        <th>Category</th>
+        <th>Target</th>
+        <th>Last Price</th>
+        <th>Movement</th>
+      </tr>
+    </thead>
+    <tbody id="parts-body"></tbody>
+  </table>
+
+  <div class="prebuilts">
+    <h2>vs Prebuilts</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>System</th>
+          <th>CPU</th>
+          <th>RAM / Storage</th>
+          <th>Price</th>
+          <th>vs My Build</th>
+        </tr>
+      </thead>
+      <tbody id="prebuilts-body"></tbody>
+    </table>
+  </div>
+
+  <div class="meta" id="meta"></div>
+
+  <script>
+    const fmt = (n) => n != null ? '$' + Number(n).toLocaleString('en-US', {minimumFractionDigits: 0, maximumFractionDigits: 0}) : '—';
+
+    function movBadge(mov) {
+      const labels = { up: '▲ Up', down: '▼ Down', flat: '— Flat', new: '● New', fixed: 'Fixed' };
+      return `<span class="badge ${mov}">${labels[mov] ?? mov}</span>`;
+    }
+
+    async function loadJSON(path) {
+      const r = await fetch(path + '?t=' + Date.now());
+      if (!r.ok) throw new Error(`${path} returned ${r.status}`);
+      return r.json();
+    }
+
+    async function main() {
+      let parts, prices;
+      try {
+        [parts, prices] = await Promise.all([
+          loadJSON('parts.json'),
+          loadJSON('prices.json').catch(() => null),
+        ]);
+      } catch (e) {
+        document.getElementById('error').textContent = 'Error loading data: ' + e.message;
+        return;
+      }
+
+      const build = parts.build;
+      document.getElementById('build-name').textContent = build.name;
+      document.getElementById('build-desc').textContent = build.description;
+      document.getElementById('budget').textContent = fmt(build.budget);
+
+      const priceMap = prices?.parts ?? {};
+      const tbody = document.getElementById('parts-body');
+      let variableTotal = 0;
+
+      // Variable-price parts
+      tbody.insertAdjacentHTML('beforeend',
+        `<tr><td colspan="5" class="section-label">Variable-Price Parts</td></tr>`);
+
+      for (const part of parts.parts) {
+        const p = priceMap[part.id];
+        const lastPrice = p?.last_price ?? null;
+        const mov = p?.movement ?? 'new';
+        if (lastPrice != null) variableTotal += lastPrice;
+
+        tbody.insertAdjacentHTML('beforeend', `
+          <tr>
+            <td>${part.name}</td>
+            <td>${part.category}</td>
+            <td>${fmt(part.target_price)}</td>
+            <td>${fmt(lastPrice)}</td>
+            <td>${movBadge(mov)}</td>
+          </tr>
+        `);
+      }
+
+      // Fixed-price extras
+      tbody.insertAdjacentHTML('beforeend',
+        `<tr><td colspan="5" class="section-label">Fixed-Price Components</td></tr>`);
+
+      let fixedTotal = 0;
+      for (const extra of parts.extras) {
+        fixedTotal += extra.fixed_price;
+        tbody.insertAdjacentHTML('beforeend', `
+          <tr>
+            <td>${extra.name}</td>
+            <td>${extra.category}</td>
+            <td>${fmt(extra.fixed_price)}</td>
+            <td>${fmt(extra.fixed_price)}</td>
+            <td>${movBadge('fixed')}</td>
+          </tr>
+        `);
+      }
+
+      const grandTotal = variableTotal + fixedTotal;
+      const vsBudget = build.budget - grandTotal;
+      const totalEl = document.getElementById('total');
+      const vsEl = document.getElementById('vs-budget');
+
+      totalEl.textContent = variableTotal > 0 ? fmt(grandTotal) : 'Prices pending';
+      vsEl.textContent = variableTotal > 0 ? (vsBudget >= 0 ? fmt(vsBudget) + ' under' : fmt(Math.abs(vsBudget)) + ' over') : '—';
+      vsEl.className = 'value ' + (vsBudget >= 0 ? 'green' : 'red');
+
+      // Prebuilts
+      const pbody = document.getElementById('prebuilts-body');
+      for (const pb of parts.prebuilts) {
+        const diff = pb.price - grandTotal;
+        const diffLabel = variableTotal > 0
+          ? `<span style="color:${diff > 0 ? '#4ade80' : '#f87171'}">${diff > 0 ? '+' : ''}${fmt(diff)}</span>`
+          : '—';
+        pbody.insertAdjacentHTML('beforeend', `
+          <tr>
+            <td>${pb.name}</td>
+            <td>${pb.cpu}</td>
+            <td>${pb.ram} / ${pb.storage}</td>
+            <td>${fmt(pb.price)}</td>
+            <td>${diffLabel}</td>
+          </tr>
+        `);
+      }
+
+      if (prices?.last_fetched) {
+        const d = new Date(prices.last_fetched);
+        document.getElementById('last-updated').textContent = d.toLocaleString();
+        document.getElementById('meta').textContent = `Prices last fetched: ${d.toUTCString()}`;
+      } else {
+        document.getElementById('last-updated').textContent = 'Not yet fetched';
+      }
+    }
+
+    main();
+  </script>
+</body>
+</html>

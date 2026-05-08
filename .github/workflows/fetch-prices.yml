@@ -1,0 +1,29 @@
+name: Fetch Prices
+
+on:
+  schedule:
+    - cron: '0 14 * * *'   # daily at 14:00 UTC
+  workflow_dispatch:        # on-demand via Sharona or GitHub UI
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Fetch prices
+        run: python3 scripts/fetch_prices.py
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+
+      - name: Commit updated prices.json
+        run: |
+          git config user.name "price-bot"
+          git config user.email "bot@noreply"
+          git add prices.json
+          git diff --staged --quiet || git commit -m "chore: update prices $(date -u +%Y-%m-%d)"
+          git push
