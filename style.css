@@ -71,14 +71,6 @@ tr:hover td { background: #1a2030; }
   padding: 1.25rem 0.75rem 0.5rem;
 }
 
-.prebuilts { margin-top: 2rem; }
-.prebuilts h2 {
-  font-size: 1rem;
-  font-weight: 600;
-  margin-bottom: 1rem;
-  color: #94a3b8;
-}
-
 .meta { margin-top: 2rem; font-size: 0.75rem; color: #4a5568; }
 
 #error { color: #f87171; padding: 1rem; }

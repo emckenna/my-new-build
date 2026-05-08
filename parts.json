@@ -97,52 +97,5 @@
       "description": "Required for DX12 Ultimate and Arc Raiders optimization.",
       "fixed_price": 140
     }
-  ],
-  "prebuilts": [
-    {
-      "id": "skytech-32",
-      "name": "Skytech King 95 (32GB/2TB)",
-      "cpu": "Ryzen 7 9800X3D",
-      "ram": "32GB",
-      "storage": "2TB",
-      "price": 2999,
-      "note": "Half RAM, half storage, older CPU"
-    },
-    {
-      "id": "skytech-64",
-      "name": "Skytech King 95 (64GB/4TB)",
-      "cpu": "Ryzen 7 9800X3D",
-      "ram": "64GB",
-      "storage": "4TB",
-      "price": 3699,
-      "note": "Up to $1,020 premium over custom, older CPU"
-    },
-    {
-      "id": "cyberpower",
-      "name": "CyberPowerPC Gamer Supreme",
-      "cpu": "Ryzen 7 9800X3D",
-      "ram": "32GB",
-      "storage": "2TB",
-      "price": 3000,
-      "note": "Half RAM, half storage, older CPU"
-    },
-    {
-      "id": "empowered",
-      "name": "Empowered PC Sentinel",
-      "cpu": "Ryzen 7 9800X3D",
-      "ram": "64GB",
-      "storage": "2TB",
-      "price": 3350,
-      "note": "Half storage, older CPU"
-    },
-    {
-      "id": "alienware",
-      "name": "Alienware Aurora ACT1250",
-      "cpu": "Intel Core Ultra 9 285",
-      "ram": "32GB",
-      "storage": "1TB",
-      "price": 3499,
-      "note": "Intel platform, half RAM, quarter storage"
-    }
   ]
 }
