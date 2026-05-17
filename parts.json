@@ -98,11 +98,14 @@
   "extras": [
     {
       "id": "cooler",
-      "name": "Arctic Liquid Freezer III 360",
+      "name": "Arctic Liquid Freezer III 360 Pro",
       "category": "cpu cooler",
       "description": "Quietest 360mm AIO available. <22 dBA idle, ~25 dBA load. Keeps 9850X3D under 65C.",
       "url": "https://www.arctic.de/en/Liquid-Freezer-III-360/ACFRE00136A",
-      "fixed_price": 130
+      "fixed_price": 130,
+      "retailers": {
+        "amazon": "https://www.amazon.com/ARCTIC-Liquid-Freezer-III-Pro/dp/B0DLWGG85P"
+      }
     },
     {
       "id": "fans",

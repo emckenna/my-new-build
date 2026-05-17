@@ -38,6 +38,7 @@
         <th>Category</th>
         <th>NE</th>
         <th>MC</th>
+        <th>AMZ</th>
         <th>Avg</th>
         <th>Lowest</th>
         <th>Movement</th>
@@ -148,7 +149,7 @@
       let variableTotal = 0;
 
       tbody.insertAdjacentHTML('beforeend',
-        `<tr><td colspan="9" class="section-label">Tracked Parts</td></tr>`);
+        `<tr><td colspan="10" class="section-label">Tracked Parts</td></tr>`);
 
       for (const part of parts.parts) {
         const p = priceMap[part.id] ?? {};
@@ -171,6 +172,7 @@
             <td>${part.category}</td>
             <td>${retailerLink(retailers.newegg, 'NE', nePrice)}</td>
             <td>${retailerLink(retailers.microcenter, 'MC', mcPrice)}</td>
+            <td>${retailerLink(retailers.amazon, 'AMZ', null)}</td>
             <td>${fmt(avg)}</td>
             <td>${fmt(lowest)}</td>
             <td>${movBadge(mov)}</td>
@@ -181,7 +183,7 @@
       }
 
       tbody.insertAdjacentHTML('beforeend',
-        `<tr><td colspan="9" class="section-label">Fixed-Price Components</td></tr>`);
+        `<tr><td colspan="10" class="section-label">Fixed-Price Components</td></tr>`);
 
       let fixedTotal = 0;
       for (const extra of parts.extras) {
@@ -193,6 +195,7 @@
             <td>${extra.category}</td>
             <td>${retailerLink(er.newegg, 'NE', null)}</td>
             <td>${retailerLink(er.microcenter, 'MC', null)}</td>
+            <td>${retailerLink(er.amazon, 'AMZ', null)}</td>
             <td>${fmt(extra.fixed_price)}</td>
             <td>${fmt(extra.fixed_price)}</td>
             <td>${movBadge('fixed')}</td>
@@ -207,7 +210,7 @@
 
       tbody.insertAdjacentHTML('beforeend', `
         <tr style="font-weight:700;border-top:2px solid #2d3748;">
-          <td colspan="5">Grand Total</td>
+          <td colspan="6">Grand Total</td>
           <td>${variableTotal > 0 ? fmt(grandTotal) : 'Prices pending'}</td>
           <td><span style="color:${vsBudget >= 0 ? '#4ade80' : '#f87171'};font-size:0.8rem">${variableTotal > 0 ? (vsBudget >= 0 ? fmt(vsBudget) + ' under budget' : fmt(Math.abs(vsBudget)) + ' over budget') : ''}</span></td>
           <td></td>
