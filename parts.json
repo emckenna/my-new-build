@@ -115,6 +115,7 @@
       "url": "https://www.noctua.at/en/products/nf-a12x25-pwm",
       "fixed_price": 80,
       "retailers": {
+        "amazon": "https://www.amazon.com/Noctua-Bundle-NF-A12x25-chromax-Black-swap-NA-SFMA1/dp/B09J91NJVN",
         "microcenter": "https://www.microcenter.com/product/617829/noctua-nf-a12x25-pwm-sso2-bearing-120mm-case-fan?storeid=085"
       }
     },
