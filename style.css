@@ -71,6 +71,22 @@ tr:hover td { background: #1a2030; }
   padding: 1.25rem 0.75rem 0.5rem;
 }
 
+a { color: #60a5fa; text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+.copy-btn {
+  background: none;
+  border: none;
+  color: #4a5568;
+  cursor: pointer;
+  font-size: 0.75rem;
+  padding: 0 0.2rem;
+  vertical-align: middle;
+}
+.copy-btn:hover { color: #94a3b8; }
+
 .meta { margin-top: 2rem; font-size: 0.75rem; color: #4a5568; }
 
 #error { color: #f87171; padding: 1rem; }
+
+td:has(svg) { padding-top: 0.5rem; padding-bottom: 0.5rem; }

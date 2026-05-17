@@ -1,4 +1,54 @@
 {
-  "last_fetched": "2026-05-16T14:31:42.055579+00:00",
-  "parts": {}
+  "last_fetched": "2026-05-17T14:16:52.767466+00:00",
+  "parts": {
+    "cpu": {
+      "newegg": 474.0,
+      "lowest_price": 474.0,
+      "lowest_at": "newegg",
+      "previous_lowest": 474.0,
+      "movement": "flat"
+    },
+    "gpu": {
+      "newegg": 1598.0,
+      "lowest_price": 1598.0,
+      "lowest_at": "newegg",
+      "previous_lowest": 1598.0,
+      "movement": "flat"
+    },
+    "ram": {
+      "newegg": 650.0,
+      "lowest_price": 650.0,
+      "lowest_at": "newegg",
+      "previous_lowest": 650.0,
+      "movement": "flat"
+    },
+    "motherboard": {
+      "newegg": 199.0,
+      "lowest_price": 199.0,
+      "lowest_at": "newegg",
+      "previous_lowest": 199.0,
+      "movement": "flat"
+    },
+    "storage": {
+      "newegg": 599.0,
+      "lowest_price": 599.0,
+      "lowest_at": "newegg",
+      "previous_lowest": 599.0,
+      "movement": "flat"
+    },
+    "case": {
+      "newegg": 124.0,
+      "lowest_price": 124.0,
+      "lowest_at": "newegg",
+      "previous_lowest": 124.0,
+      "movement": "flat"
+    },
+    "psu": {
+      "newegg": 147.0,
+      "lowest_price": 147.0,
+      "lowest_at": "newegg",
+      "previous_lowest": 147.0,
+      "movement": "flat"
+    }
+  }
 }

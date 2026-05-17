@@ -1,7 +1,7 @@
 {
   "_meta": {
     "generated": "2026-05-08",
-    "schema_version": "1.0"
+    "schema_version": "2.0"
   },
   "build": {
     "name": "Whisper Beast 2026",
@@ -15,36 +15,84 @@
       "name": "AMD Ryzen 7 9850X3D",
       "category": "cpu",
       "description": "New gaming king on AM5 (launched Jan 2026). +400MHz boost over 9800X3D. 96MB L3 cache excels in extraction-shooter and CPU-bound workloads. 2-5% faster than 9800X3D in Arc Raiders scenarios.",
+      "url": "https://www.amd.com/en/products/processors/desktops/ryzen/9000-series/amd-ryzen-7-9850x3d.html",
       "target_price": 499,
-      "model_id": "ryzen_7_9850x3d",
-      "market_url": "https://www.pcprice.watch/data/ryzen_7_9850x3d_market_data.json",
-      "last_price": null,
-      "last_checked": null,
-      "alt_urls": []
+      "retailers": {
+        "newegg": "https://www.newegg.com/amd-ryzen-7-9850x3d-ryzen-7-9000-series-granite-ridge-socket-am5-desktop-processor/p/N82E16819113934",
+        "microcenter": "https://www.microcenter.com/product/706001/amd-ryzen-7-9850x3d-granite-ridge-am5-470ghz-8-core-boxed-processor-heatsink-not-included?storeid=085"
+      }
     },
     {
       "id": "gpu",
       "name": "MSI RTX 5080 Ventus 3X OC 16GB",
       "category": "video card",
       "description": "Primary gaming GPU and same-box stream encoder. 170-220+ FPS at 1440p Ultra with DLSS4/MFG. 9th-gen NVENC handles 1080p60/1440p60 OBS encode with negligible gaming impact. ~24 dBA load with custom fan curve. Street price stabilized ~$1,249 vs $999 MSRP.",
+      "url": "https://www.msi.com/Graphics-Card/GeForce-RTX-5080-16G-VENTUS-3X-OC",
       "target_price": 999,
-      "model_id": "rtx5080",
-      "market_url": "https://www.pcprice.watch/data/rtx5080_market_data.json",
-      "last_price": null,
-      "last_checked": null,
-      "alt_urls": []
+      "retailers": {
+        "newegg": "https://www.newegg.com/msi-rtx-5080-16g-ventus-3x-oc-geforce-rtx-5080-16gb-graphics-card/p/N82E16814137930",
+        "microcenter": "https://www.microcenter.com/product/693011/msi-nvidia-geforce-rtx-5080-ventus-3x-overclocked-triple-fan-16gb-gddr7-pcie-50-graphics-card?storeid=085"
+      }
     },
     {
       "id": "ram",
-      "name": "Corsair Vengeance 64GB DDR5-6000 CL40",
+      "name": "G.Skill Flare X5 64GB DDR5-6000 CL30",
       "category": "memory",
-      "description": "64GB for simultaneous Arc Raiders, OBS, SDK dev, browser, and Discord with no constraint. DDR5-6000 is the Zen5 sweet spot — speed above this gives <1% gain.",
+      "description": "64GB AMD EXPO-tuned DDR5-6000 for AM5. CL30 timings — tighter than CL40. DDR5-6000 is the Zen5 sweet spot; speed above this gives <1% gain.",
+      "url": "https://www.gskill.com/product/165/396/1691400033/F5-6000J3040G32GX2-FX5",
       "target_price": 196,
-      "model_id": "ddr5_64gb_6000",
-      "market_url": "https://www.pcprice.watch/data/ddr5_64gb_6000_market_data.json",
-      "last_price": null,
-      "last_checked": null,
-      "alt_urls": []
+      "retailers": {
+        "newegg": "https://www.newegg.com/g-skill-64gb-ddr5-6000/p/N82E16820374518",
+        "microcenter": "https://www.microcenter.com/product/668981/gskill-flare-x5-series-64gb-(2-x-32gb)-ddr5-6000-pc5-48000-cl30-dual-channel-desktop-memory-kit-f5-6000j3040g32gx2-fx5-black?storeid=085"
+      }
+    },
+    {
+      "id": "motherboard",
+      "name": "ASRock X870 LiveMixer WiFi",
+      "category": "motherboard",
+      "description": "X870 chipset, PCIe 5.0. 25 USB ports (14 rear including USB4). Onboard 2.5GbE wired Ethernet — mandatory for low-latency Arc Raiders. WiFi as fallback only.",
+      "url": "https://www.asrock.com/mb/AMD/X870%20LiveMixer%20WiFi/index.asp",
+      "target_price": 230,
+      "retailers": {
+        "newegg": "https://www.newegg.com/asrock-x870-livemixer-wifi-atx-motherboard-amd-x870-am5/p/N82E16813162233",
+        "microcenter": null
+      }
+    },
+    {
+      "id": "storage",
+      "name": "WD Black SN850X 4TB NVMe Gen4",
+      "category": "storage",
+      "description": "7,000/6,600 MB/s. Fast game loads and Portal SDK map compiles. Old SSDs reused for 12TB+ total.",
+      "url": "https://www.westerndigital.com/products/internal-drives/wd-black-sn850x-nvme-ssd?sku=WDS400T2X0E",
+      "target_price": 260,
+      "retailers": {
+        "newegg": "https://www.newegg.com/western-digital-4tb-black-sn850x-nvme/p/N82E16820250244",
+        "microcenter": "https://www.microcenter.com/product/652494/wd-black-sn850x-4tb-112l-3d-tlc-nand-flash-pcie-gen-4-x4-nvme-m2-internal-ssd?storeid=085"
+      }
+    },
+    {
+      "id": "case",
+      "name": "Fractal Design Define 7 Compact",
+      "category": "case",
+      "description": "Sound-dampened bitumen/wool panels. Best-in-class silence with 2x Dynamic fans included.",
+      "url": "https://www.fractal-design.com/products/cases/define/define-7-compact/",
+      "target_price": 140,
+      "retailers": {
+        "newegg": "https://www.newegg.com/fractal-design-atx-mid-tower-define-7-compact-steel-computer-case-black-fd-c-def7c-01/p/N82E16811352126",
+        "microcenter": null
+      }
+    },
+    {
+      "id": "psu",
+      "name": "Corsair RM1000e 1000W 80+ Gold",
+      "category": "power supply",
+      "description": "Zero-RPM fan mode below 40% load — completely silent at idle/light gaming. Headroom for future GPU upgrades.",
+      "url": "https://www.corsair.com/us/en/p/psu/cp-9020297-na/rme-series-rm1000e-fully-modular-low-noise-atx-power-supply-cp-9020297-na",
+      "target_price": 150,
+      "retailers": {
+        "newegg": "https://www.newegg.com/corsair-rmx-series-atx-3-1-compatible-1000-w-cybenetics-gold-power-supply-black-rm1000e/p/N82E16817139337",
+        "microcenter": "https://www.microcenter.com/product/689530/corsair-rme-series-rm1000e-1000-watt-cybenetics-gold-atx-fully-modular-power-supply-atx-31-compatible?storeid=085"
+      }
     }
   ],
   "extras": [
@@ -53,41 +101,15 @@
       "name": "Arctic Liquid Freezer III 360",
       "category": "cpu cooler",
       "description": "Quietest 360mm AIO available. <22 dBA idle, ~25 dBA load. Keeps 9850X3D under 65C.",
+      "url": "https://www.arctic.de/en/Liquid-Freezer-III-360/ACFRE00136A",
       "fixed_price": 130
-    },
-    {
-      "id": "motherboard",
-      "name": "ASRock X870 LiveMixer WiFi",
-      "category": "motherboard",
-      "description": "X870 chipset, PCIe 5.0. 25 USB ports (14 rear including USB4). Onboard 2.5GbE wired Ethernet — mandatory for low-latency Arc Raiders. WiFi as fallback only.",
-      "fixed_price": 230
-    },
-    {
-      "id": "storage",
-      "name": "WD Black SN850X 4TB NVMe Gen4",
-      "category": "storage",
-      "description": "7,000/6,600 MB/s. Fast game loads and Portal SDK map compiles. Old SSDs reused for 12TB+ total.",
-      "fixed_price": 260
-    },
-    {
-      "id": "case",
-      "name": "Fractal Design Define 7 Compact",
-      "category": "case",
-      "description": "Sound-dampened bitumen/wool panels. Best-in-class silence with 2x Dynamic fans included.",
-      "fixed_price": 140
-    },
-    {
-      "id": "psu",
-      "name": "Corsair RM1000e 1000W 80+ Gold",
-      "category": "power supply",
-      "description": "Zero-RPM fan mode below 40% load — completely silent at idle/light gaming. Headroom for future GPU upgrades.",
-      "fixed_price": 150
     },
     {
       "id": "fans",
       "name": "Noctua NF-A12x25 PWM 3-Pack",
       "category": "fans",
       "description": "Sub-20 dBA case airflow. Replaces stock fans for ultimate quiet operation.",
+      "url": "https://www.noctua.at/en/products/nf-a12x25-pwm",
       "fixed_price": 80
     },
     {
@@ -95,6 +117,7 @@
       "name": "Windows 11 Pro",
       "category": "os",
       "description": "Required for DX12 Ultimate and Arc Raiders optimization.",
+      "url": "https://www.microsoft.com/en-us/windows/windows-11",
       "fixed_price": 140
     }
   ]

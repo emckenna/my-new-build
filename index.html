@@ -36,9 +36,13 @@
       <tr>
         <th>Part</th>
         <th>Category</th>
-        <th>Target</th>
-        <th>Last Price</th>
+        <th>NE</th>
+        <th>MC</th>
+        <th>Avg</th>
+        <th>Lowest</th>
         <th>Movement</th>
+        <th>Trend</th>
+        <th></th>
       </tr>
     </thead>
     <tbody id="parts-body"></tbody>
@@ -54,6 +58,66 @@
       return `<span class="badge ${mov}">${labels[mov] ?? mov}</span>`;
     }
 
+    function retailerLink(url, label, price) {
+      if (!url) return '—';
+      const display = price != null ? fmt(price) : label;
+      return `<a href="${url}" target="_blank" rel="noopener">${display}</a>`;
+    }
+
+    function nameCell(name, url) {
+      return url ? `<a href="${url}" target="_blank" rel="noopener">${name}</a>` : name;
+    }
+
+    function copyBtn(name) {
+      return `<button class="copy-btn" onclick="copyText('${name.replace(/'/g, "\\'")}')" title="Copy name">⎘</button>`;
+    }
+
+    function copyText(text) {
+      navigator.clipboard.writeText(text);
+    }
+
+    function sparkline(history) {
+      if (!history || history.length === 0) return '—';
+      const W = 80, H = 28, PAD = 3;
+      const series = [
+        { key: 'newegg', color: '#60a5fa' },
+        { key: 'microcenter', color: '#a78bfa' },
+      ];
+
+      const allVals = [];
+      for (const s of series)
+        for (const d of history)
+          if (d[s.key] != null) allVals.push(d[s.key]);
+      if (allVals.length === 0) return '—';
+
+      let minV = Math.min(...allVals);
+      let maxV = Math.max(...allVals);
+      if (minV === maxV) { minV -= 1; maxV += 1; }
+
+      const n = history.length;
+      const xScale = n > 1 ? (W - 2 * PAD) / (n - 1) : 0;
+      const yScale = (H - 2 * PAD) / (maxV - minV);
+      const px = i => (PAD + i * xScale).toFixed(1);
+      const py = v => (H - PAD - (v - minV) * yScale).toFixed(1);
+
+      let paths = '';
+      for (const s of series) {
+        const pts = history
+          .map((d, i) => d[s.key] != null ? `${px(i)},${py(d[s.key])}` : null)
+          .filter(Boolean);
+        if (pts.length === 0) continue;
+        if (pts.length === 1) {
+          const [cx, cy] = pts[0].split(',');
+          paths += `<circle cx="${cx}" cy="${cy}" r="2.5" fill="${s.color}"/>`;
+        } else {
+          paths += `<polyline points="${pts.join(' ')}" fill="none" stroke="${s.color}" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>`;
+          const [cx, cy] = pts[pts.length - 1].split(',');
+          paths += `<circle cx="${cx}" cy="${cy}" r="2" fill="${s.color}"/>`;
+        }
+      }
+      return paths ? `<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" style="overflow:visible;display:block">${paths}</svg>` : '—';
+    }
+
     async function loadJSON(path) {
       const r = await fetch(path + '?t=' + Date.now());
       if (!r.ok) throw new Error(`${path} returned ${r.status}`);
@@ -61,16 +125,18 @@
     }
 
     async function main() {
-      let parts, prices;
+      let parts, prices, history;
       try {
-        [parts, prices] = await Promise.all([
+        [parts, prices, history] = await Promise.all([
           loadJSON('parts.json'),
           loadJSON('prices.json').catch(() => null),
+          loadJSON('price_history.json').catch(() => null),
         ]);
       } catch (e) {
         document.getElementById('error').textContent = 'Error loading data: ' + e.message;
         return;
       }
+      const histMap = history ?? {};
 
       const build = parts.build;
       document.getElementById('build-name').textContent = build.name;
@@ -81,41 +147,56 @@
       const tbody = document.getElementById('parts-body');
       let variableTotal = 0;
 
-      // Variable-price parts
       tbody.insertAdjacentHTML('beforeend',
-        `<tr><td colspan="5" class="section-label">Variable-Price Parts</td></tr>`);
+        `<tr><td colspan="9" class="section-label">Tracked Parts</td></tr>`);
 
       for (const part of parts.parts) {
-        const p = priceMap[part.id];
-        const lastPrice = p?.last_price ?? null;
-        const mov = p?.movement ?? 'new';
-        if (lastPrice != null) variableTotal += lastPrice;
+        const p = priceMap[part.id] ?? {};
+        const nePrice = p.newegg ?? null;
+        const mcPrice = p.microcenter ?? null;
+        const lowest = p.lowest_price ?? null;
+        const mov = p.movement ?? 'new';
+        if (lowest != null) variableTotal += lowest;
+
+        const availPrices = [nePrice, mcPrice].filter(x => x != null);
+        const avg = availPrices.length > 0
+          ? availPrices.reduce((a, b) => a + b, 0) / availPrices.length
+          : null;
+
+        const retailers = part.retailers ?? {};
 
         tbody.insertAdjacentHTML('beforeend', `
           <tr>
-            <td>${part.name}</td>
+            <td>${nameCell(part.name, part.url)}</td>
             <td>${part.category}</td>
-            <td>${fmt(part.target_price)}</td>
-            <td>${fmt(lastPrice)}</td>
+            <td>${retailerLink(retailers.newegg, 'NE', nePrice)}</td>
+            <td>${retailerLink(retailers.microcenter, 'MC', mcPrice)}</td>
+            <td>${fmt(avg)}</td>
+            <td>${fmt(lowest)}</td>
             <td>${movBadge(mov)}</td>
+            <td>${sparkline(histMap[part.id])}</td>
+            <td>${copyBtn(part.name)}</td>
           </tr>
         `);
       }
 
-      // Fixed-price extras
       tbody.insertAdjacentHTML('beforeend',
-        `<tr><td colspan="5" class="section-label">Fixed-Price Components</td></tr>`);
+        `<tr><td colspan="9" class="section-label">Fixed-Price Components</td></tr>`);
 
       let fixedTotal = 0;
       for (const extra of parts.extras) {
         fixedTotal += extra.fixed_price;
         tbody.insertAdjacentHTML('beforeend', `
           <tr>
-            <td>${extra.name}</td>
+            <td>${nameCell(extra.name, extra.url)}</td>
             <td>${extra.category}</td>
+            <td>—</td>
+            <td>—</td>
             <td>${fmt(extra.fixed_price)}</td>
             <td>${fmt(extra.fixed_price)}</td>
             <td>${movBadge('fixed')}</td>
+            <td></td>
+            <td>${copyBtn(extra.name)}</td>
           </tr>
         `);
       }
@@ -125,9 +206,11 @@
 
       tbody.insertAdjacentHTML('beforeend', `
         <tr style="font-weight:700;border-top:2px solid #2d3748;">
-          <td colspan="3">Grand Total</td>
+          <td colspan="5">Grand Total</td>
           <td>${variableTotal > 0 ? fmt(grandTotal) : 'Prices pending'}</td>
           <td><span style="color:${vsBudget >= 0 ? '#4ade80' : '#f87171'};font-size:0.8rem">${variableTotal > 0 ? (vsBudget >= 0 ? fmt(vsBudget) + ' under budget' : fmt(Math.abs(vsBudget)) + ' over budget') : ''}</span></td>
+          <td></td>
+          <td></td>
         </tr>
       `);
 
