@@ -108,9 +108,12 @@
       "id": "fans",
       "name": "Noctua NF-A12x25 PWM 3-Pack",
       "category": "fans",
-      "description": "Sub-20 dBA case airflow. Replaces stock fans for ultimate quiet operation.",
+      "description": "Sub-20 dBA case airflow. Replaces stock fans for ultimate quiet operation. MC sells individually — link is per-unit.",
       "url": "https://www.noctua.at/en/products/nf-a12x25-pwm",
-      "fixed_price": 80
+      "fixed_price": 80,
+      "retailers": {
+        "microcenter": "https://www.microcenter.com/product/617829/noctua-nf-a12x25-pwm-sso2-bearing-120mm-case-fan?storeid=085"
+      }
     },
     {
       "id": "os",

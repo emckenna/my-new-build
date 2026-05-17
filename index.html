@@ -186,12 +186,13 @@
       let fixedTotal = 0;
       for (const extra of parts.extras) {
         fixedTotal += extra.fixed_price;
+        const er = extra.retailers ?? {};
         tbody.insertAdjacentHTML('beforeend', `
           <tr>
             <td>${nameCell(extra.name, extra.url)}</td>
             <td>${extra.category}</td>
-            <td>—</td>
-            <td>—</td>
+            <td>${retailerLink(er.newegg, 'NE', null)}</td>
+            <td>${retailerLink(er.microcenter, 'MC', null)}</td>
             <td>${fmt(extra.fixed_price)}</td>
             <td>${fmt(extra.fixed_price)}</td>
             <td>${movBadge('fixed')}</td>
