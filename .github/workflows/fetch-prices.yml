@@ -29,4 +29,5 @@ jobs:
           git config user.email "bot@noreply"
           git add prices.json price_history.json
           git diff --staged --quiet || git commit -m "chore: update prices $(date -u +%Y-%m-%d)"
+          git pull --rebase origin main
           git push
