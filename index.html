@@ -14,6 +14,7 @@
     <div class="card">
       <div class="label">Build Total</div>
       <div class="value neutral" id="total">—</div>
+      <div id="total-sparkline" style="margin-top:0.5rem"></div>
     </div>
     <div class="card">
       <div class="label">Budget</div>
@@ -117,6 +118,47 @@
         }
       }
       return paths ? `<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" style="overflow:visible;display:block">${paths}</svg>` : '—';
+    }
+
+    function buildTotalHistory(histMap, partIds, fixedTotal) {
+      const dateSet = new Set();
+      for (const id of partIds)
+        for (const e of histMap[id] ?? []) dateSet.add(e.date);
+      const dates = [...dateSet].sort();
+
+      const lastKnown = {};
+      return dates.flatMap(date => {
+        for (const id of partIds) {
+          const e = (histMap[id] ?? []).find(e => e.date === date);
+          if (e?.lowest != null) lastKnown[id] = e.lowest;
+        }
+        const varTotal = Object.values(lastKnown).reduce((a, b) => a + b, 0);
+        return Object.keys(lastKnown).length > 0
+          ? [{ date, total: varTotal + fixedTotal }]
+          : [];
+      });
+    }
+
+    function totalSparkline(data) {
+      if (!data || data.length < 2) return '';
+      const W = 140, H = 32, PAD = 3;
+      const vals = data.map(d => d.total);
+      let minV = Math.min(...vals), maxV = Math.max(...vals);
+      if (minV === maxV) { minV -= 1; maxV += 1; }
+
+      const n = data.length;
+      const xScale = (W - 2 * PAD) / (n - 1);
+      const yScale = (H - 2 * PAD) / (maxV - minV);
+      const px = i => (PAD + i * xScale).toFixed(1);
+      const py = v => (H - PAD - (v - minV) * yScale).toFixed(1);
+
+      const pts = data.map((d, i) => `${px(i)},${py(d.total)}`).join(' ');
+      const trend = vals[vals.length - 1] <= vals[0] ? '#4ade80' : '#f87171';
+      const [cx, cy] = pts.split(' ').pop().split(',');
+      return `<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" style="overflow:visible;display:block">` +
+        `<polyline points="${pts}" fill="none" stroke="${trend}" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round" opacity="0.8"/>` +
+        `<circle cx="${cx}" cy="${cy}" r="2.5" fill="${trend}"/>` +
+        `</svg>`;
     }
 
     async function loadJSON(path) {
@@ -224,6 +266,10 @@
       totalEl.textContent = variableTotal > 0 ? fmt(grandTotal) : 'Prices pending';
       vsEl.textContent = variableTotal > 0 ? (vsBudget >= 0 ? fmt(vsBudget) + ' under' : fmt(Math.abs(vsBudget)) + ' over') : '—';
       vsEl.className = 'value ' + (vsBudget >= 0 ? 'green' : 'red');
+
+      const partIds = parts.parts.map(p => p.id);
+      const totalHistory = buildTotalHistory(histMap, partIds, fixedTotal);
+      document.getElementById('total-sparkline').innerHTML = totalSparkline(totalHistory);
 
       if (prices?.last_fetched) {
         const d = new Date(prices.last_fetched);
