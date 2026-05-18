@@ -2,7 +2,7 @@ name: Fetch Prices
 
 on:
   schedule:
-    - cron: '0 14 * * *'   # daily at 14:00 UTC
+    - cron: '0 */4 * * *'  # every 4 hours
   workflow_dispatch:        # on-demand via Sharona or GitHub UI
 
 jobs:
@@ -29,5 +29,5 @@ jobs:
           git config user.email "bot@noreply"
           git add prices.json price_history.json
           git diff --staged --quiet || git commit -m "chore: update prices $(date -u +%Y-%m-%d)"
-          git pull --rebase origin main
+          git pull --rebase -X ours origin main
           git push
