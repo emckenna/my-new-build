@@ -8,9 +8,9 @@ if [ ! -d .venv ]; then
   python3 -m venv .venv
 fi
 
-if ! .venv/bin/python3 -c "import bs4" 2>/dev/null; then
+if ! .venv/bin/python3 -c "import bs4, cloudscraper" 2>/dev/null; then
   echo "Installing dependencies..."
-  .venv/bin/pip install beautifulsoup4 -q
+  .venv/bin/pip install beautifulsoup4 cloudscraper -q
 fi
 
 .venv/bin/python3 scripts/fetch_prices.py

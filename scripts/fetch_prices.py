@@ -3,7 +3,7 @@
 Fetch current prices from Newegg and Microcenter for all tracked parts,
 update prices.json, and send a Telegram summary if prices moved.
 
-Dependencies: beautifulsoup4 (pip install beautifulsoup4)
+Dependencies: beautifulsoup4 cloudscraper (pip install beautifulsoup4 cloudscraper)
 """
 
 import json
@@ -12,6 +12,7 @@ import re
 import urllib.request
 from datetime import datetime, timezone
 
+import cloudscraper
 from bs4 import BeautifulSoup
 
 PARTS_FILE = "parts.json"
@@ -37,6 +38,13 @@ def fetch_html(url):
     req = urllib.request.Request(url, headers=HEADERS)
     with urllib.request.urlopen(req, timeout=15) as resp:
         return resp.read().decode("utf-8", errors="replace")
+
+
+def fetch_html_mc(url):
+    scraper = cloudscraper.create_scraper()
+    resp = scraper.get(url, timeout=20)
+    resp.raise_for_status()
+    return resp.text
 
 
 def parse_newegg(html):
@@ -76,6 +84,14 @@ def parse_microcenter(html):
         if m:
             return float(m.group().replace(",", ""))
 
+    # Fallback: span with content attribute (e.g. <span content="439.99" id="pricing2">)
+    el = soup.select_one("span[content]")
+    if el:
+        content = el.get("content", "")
+        m = re.search(r"[\d,]+\.?\d*", content.replace(",", ""))
+        if m:
+            return float(m.group().replace(",", ""))
+
     # Fallback: #pricing span or .price span
     for selector in ("#pricing span", ".price span", ".pricemain"):
         el = soup.select_one(selector)
@@ -84,6 +100,17 @@ def parse_microcenter(html):
             m = re.search(r"[\d,]+\.?\d*", text.replace(",", ""))
             if m:
                 return float(m.group().replace(",", ""))
+
+    # Fallback: JSON-LD structured data (present even when out of stock)
+    for tag in soup.find_all("script", type="application/ld+json"):
+        try:
+            data = json.loads(tag.string)
+            if data.get("@type") == "Product":
+                price = data.get("offers", {}).get("price")
+                if price:
+                    return float(price)
+        except Exception:
+            pass
 
     raise ValueError("Price not found on Microcenter page")
 
@@ -94,8 +121,14 @@ PARSERS = {
 }
 
 
+FETCHERS = {
+    "microcenter": fetch_html_mc,
+}
+
+
 def fetch_price(retailer, url):
-    html = fetch_html(url)
+    fetcher = FETCHERS.get(retailer, fetch_html)
+    html = fetcher(url)
     return PARSERS[retailer](html)
 
 
