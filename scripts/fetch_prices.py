@@ -227,7 +227,9 @@ def send_telegram(text):
         print("Telegram sent:", resp.status)
 
 
-def main():
+def main(dry_run=False):
+    if dry_run:
+        print("--- DRY RUN: no files will be written ---")
     with open(PARTS_FILE) as f:
         build = json.load(f)
 
@@ -280,15 +282,16 @@ def main():
         "parts": results,
     }
 
-    with open(PRICES_FILE, "w") as f:
-        json.dump(prices_out, f, indent=2)
-    print(f"Wrote {PRICES_FILE}")
+    if not dry_run:
+        with open(PRICES_FILE, "w") as f:
+            json.dump(prices_out, f, indent=2)
+        print(f"Wrote {PRICES_FILE}")
 
-    history = load_history()
-    history = append_history(history, results, now.strftime("%Y-%m-%d"))
-    with open(HISTORY_FILE, "w") as f:
-        json.dump(history, f, indent=2)
-    print(f"Wrote {HISTORY_FILE}")
+        history = load_history()
+        history = append_history(history, results, now.strftime("%Y-%m-%d"))
+        with open(HISTORY_FILE, "w") as f:
+            json.dump(history, f, indent=2)
+        print(f"Wrote {HISTORY_FILE}")
 
     msg, _ = format_telegram(results, parts_meta, build["build"]["budget"], extras_total)
     print("\n" + msg)
@@ -296,4 +299,6 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    import sys
+    dry_run = "--dry-run" in sys.argv
+    main(dry_run=dry_run)
