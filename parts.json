@@ -72,14 +72,14 @@
     },
     {
       "id": "case",
-      "name": "Fractal Design Define 7 Compact",
+      "name": "Fractal Design Define 7",
       "category": "case",
-      "description": "Sound-dampened bitumen/wool panels. Best-in-class silence with 2x Dynamic fans included.",
-      "url": "https://www.fractal-design.com/products/cases/define/define-7-compact/",
-      "target_price": 140,
+      "description": "Sound-dampened bitumen/wool panels. More dampening than Compact. NE has solid panel (quieter); MC has Tempered Glass version (in-store only, no online price). 3x Dynamic fans included.",
+      "url": "https://www.fractal-design.com/products/cases/define/define-7/black/",
+      "target_price": 160,
       "retailers": {
-        "newegg": "https://www.newegg.com/fractal-design-atx-mid-tower-define-7-compact-steel-computer-case-black-fd-c-def7c-01/p/N82E16811352126",
-        "microcenter": null
+        "newegg": "https://www.newegg.com/black-fractal-design-define-7-atx-mid-tower/p/N82E16811352109",
+        "microcenter": "https://www.microcenter.com/product/690686/fractal-design-define-7-tempered-glass-atx-mid-tower-computer-case-black?storeid=085"
       }
     },
     {
