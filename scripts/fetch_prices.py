@@ -221,7 +221,7 @@ def main():
                 part_result[retailer] = price
                 print(f"  {retailer}: ${price:.2f}")
             except Exception as e:
-                print(f"  ERROR ({retailer}): {e}")
+                print(f"  ERROR ({retailer}): {e}\n    {url}")
                 if retailer in prev:
                     part_result[retailer] = prev[retailer]
 
