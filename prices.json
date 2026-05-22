@@ -1,5 +1,5 @@
 {
-  "last_fetched": "2026-05-22T01:01:57.178476+00:00",
+  "last_fetched": "2026-05-22T05:28:42.140154+00:00",
   "parts": {
     "cpu": {
       "newegg": 474.0,
@@ -32,11 +32,11 @@
       "movement": "flat"
     },
     "storage": {
-      "newegg": 616.0,
-      "lowest_price": 616.0,
+      "newegg": 617.0,
+      "lowest_price": 617.0,
       "lowest_at": "newegg",
-      "previous_lowest": 599.0,
-      "movement": "up"
+      "previous_lowest": 616.0,
+      "movement": "flat"
     },
     "case": {
       "newegg": 194.0,
@@ -49,8 +49,8 @@
       "newegg": 147.0,
       "lowest_price": 147.0,
       "lowest_at": "newegg",
-      "previous_lowest": 169.0,
-      "movement": "down"
+      "previous_lowest": 147.0,
+      "movement": "flat"
     }
   }
 }
