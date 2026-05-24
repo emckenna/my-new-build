@@ -1,5 +1,5 @@
 {
-  "last_fetched": "2026-05-24T05:26:16.644258+00:00",
+  "last_fetched": "2026-05-24T08:58:50.167691+00:00",
   "parts": {
     "cpu": {
       "newegg": 474.0,
@@ -35,8 +35,8 @@
       "newegg": 649.0,
       "lowest_price": 649.0,
       "lowest_at": "newegg",
-      "previous_lowest": 598.0,
-      "movement": "up"
+      "previous_lowest": 649.0,
+      "movement": "flat"
     },
     "case": {
       "newegg": 194.0,
