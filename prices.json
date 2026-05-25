@@ -1,5 +1,5 @@
 {
-  "last_fetched": "2026-05-24T20:25:46.503429+00:00",
+  "last_fetched": "2026-05-25T01:04:08.930075+00:00",
   "parts": {
     "cpu": {
       "newegg": 474.0,
@@ -21,8 +21,8 @@
       "microcenter": 899.99,
       "lowest_price": 795.0,
       "lowest_at": "newegg",
-      "previous_lowest": 642.0,
-      "movement": "up"
+      "previous_lowest": 795.0,
+      "movement": "flat"
     },
     "motherboard": {
       "newegg": 229.0,
