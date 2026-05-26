@@ -1,12 +1,12 @@
 {
-  "last_fetched": "2026-05-25T20:35:49.214343+00:00",
+  "last_fetched": "2026-05-26T01:00:25.794798+00:00",
   "parts": {
     "cpu": {
       "newegg": 474.0,
       "lowest_price": 474.0,
       "lowest_at": "newegg",
-      "previous_lowest": 429.99,
-      "movement": "up"
+      "previous_lowest": 474.0,
+      "movement": "flat"
     },
     "gpu": {
       "newegg": 1598.0,
