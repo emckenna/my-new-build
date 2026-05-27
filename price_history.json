@@ -49,6 +49,11 @@
       "date": "2026-05-26",
       "newegg": 474.0,
       "lowest": 474.0
+    },
+    {
+      "date": "2026-05-27",
+      "newegg": 474.0,
+      "lowest": 474.0
     }
   ],
   "gpu": [
@@ -105,6 +110,12 @@
     },
     {
       "date": "2026-05-26",
+      "newegg": 1598.0,
+      "microcenter": 1439.99,
+      "lowest": 1439.99
+    },
+    {
+      "date": "2026-05-27",
       "newegg": 1598.0,
       "microcenter": 1439.99,
       "lowest": 1439.99
@@ -167,6 +178,12 @@
       "newegg": 795.0,
       "microcenter": 899.99,
       "lowest": 795.0
+    },
+    {
+      "date": "2026-05-27",
+      "newegg": 795.0,
+      "microcenter": 899.99,
+      "lowest": 795.0
     }
   ],
   "motherboard": [
@@ -217,6 +234,11 @@
     },
     {
       "date": "2026-05-26",
+      "newegg": 184.0,
+      "lowest": 184.0
+    },
+    {
+      "date": "2026-05-27",
       "newegg": 184.0,
       "lowest": 184.0
     }
@@ -272,6 +294,12 @@
       "newegg": 649.0,
       "microcenter": 649.99,
       "lowest": 649.0
+    },
+    {
+      "date": "2026-05-27",
+      "newegg": 649.0,
+      "microcenter": 649.99,
+      "lowest": 649.0
     }
   ],
   "case": [
@@ -322,6 +350,11 @@
     },
     {
       "date": "2026-05-26",
+      "newegg": 194.0,
+      "lowest": 194.0
+    },
+    {
+      "date": "2026-05-27",
       "newegg": 194.0,
       "lowest": 194.0
     }
@@ -375,6 +408,12 @@
     {
       "date": "2026-05-26",
       "newegg": 169.0,
+      "lowest": 169.0
+    },
+    {
+      "date": "2026-05-27",
+      "newegg": 169.0,
+      "microcenter": 189.99,
       "lowest": 169.0
     }
   ]
