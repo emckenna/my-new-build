@@ -19,7 +19,8 @@
       "target_price": 499,
       "retailers": {
         "newegg": "https://www.newegg.com/amd-ryzen-7-9850x3d-ryzen-7-9000-series-granite-ridge-socket-am5-desktop-processor/p/N82E16819113934",
-        "microcenter": "https://www.microcenter.com/product/706001/amd-ryzen-7-9850x3d-granite-ridge-am5-470ghz-8-core-boxed-processor-heatsink-not-included?storeid=085"
+        "microcenter": "https://www.microcenter.com/product/706001/amd-ryzen-7-9850x3d-granite-ridge-am5-470ghz-8-core-boxed-processor-heatsink-not-included?storeid=085",
+        "amazon": "https://www.amazon.com/dp/B0G8JMLXNQ"
       }
     },
     {
@@ -31,7 +32,8 @@
       "target_price": 999,
       "retailers": {
         "newegg": "https://www.newegg.com/msi-rtx-5080-16g-ventus-3x-oc-geforce-rtx-5080-16gb-graphics-card/p/N82E16814137930",
-        "microcenter": "https://www.microcenter.com/product/693011/msi-nvidia-geforce-rtx-5080-ventus-3x-overclocked-triple-fan-16gb-gddr7-pcie-50-graphics-card?storeid=085"
+        "microcenter": "https://www.microcenter.com/product/693011/msi-nvidia-geforce-rtx-5080-ventus-3x-overclocked-triple-fan-16gb-gddr7-pcie-50-graphics-card?storeid=085",
+        "amazon": "https://www.amazon.com/dp/B0DSWQNGYF"
       }
     },
     {
@@ -43,7 +45,8 @@
       "target_price": 196,
       "retailers": {
         "newegg": "https://www.newegg.com/g-skill-64gb-ddr5-6000/p/N82E16820374518",
-        "microcenter": "https://www.microcenter.com/product/668981/gskill-flare-x5-series-64gb-(2-x-32gb)-ddr5-6000-pc5-48000-cl30-dual-channel-desktop-memory-kit-f5-6000j3040g32gx2-fx5-black?storeid=085"
+        "microcenter": "https://www.microcenter.com/product/668981/gskill-flare-x5-series-64gb-(2-x-32gb)-ddr5-6000-pc5-48000-cl30-dual-channel-desktop-memory-kit-f5-6000j3040g32gx2-fx5-black?storeid=085",
+        "amazon": "https://www.amazon.com/dp/B0CGQ3KS8X"
       }
     },
     {
@@ -55,7 +58,8 @@
       "target_price": 230,
       "retailers": {
         "newegg": "https://www.newegg.com/asrock-x870-livemixer-wifi-atx-motherboard-amd-x870-am5/p/N82E16813162233",
-        "microcenter": null
+        "microcenter": null,
+        "amazon": "https://www.amazon.com/dp/B0FN44YQKY"
       }
     },
     {
@@ -67,7 +71,8 @@
       "target_price": 260,
       "retailers": {
         "newegg": "https://www.newegg.com/western-digital-4tb-black-sn850x-nvme/p/N82E16820250244",
-        "microcenter": "https://www.microcenter.com/product/652494/wd-black-sn850x-4tb-112l-3d-tlc-nand-flash-pcie-gen-4-x4-nvme-m2-internal-ssd?storeid=085"
+        "microcenter": "https://www.microcenter.com/product/652494/wd-black-sn850x-4tb-112l-3d-tlc-nand-flash-pcie-gen-4-x4-nvme-m2-internal-ssd?storeid=085",
+        "amazon": "https://www.amazon.com/dp/B0B7CQ2CHH"
       }
     },
     {
@@ -79,7 +84,8 @@
       "target_price": 160,
       "retailers": {
         "newegg": "https://www.newegg.com/black-fractal-design-define-7-atx-mid-tower/p/N82E16811352109",
-        "microcenter": "https://www.microcenter.com/product/690686/fractal-design-define-7-tempered-glass-atx-mid-tower-computer-case-black?storeid=085"
+        "microcenter": "https://www.microcenter.com/product/690686/fractal-design-define-7-tempered-glass-atx-mid-tower-computer-case-black?storeid=085",
+        "amazon": "https://www.amazon.com/dp/B08146GB6Y"
       }
     },
     {
@@ -91,7 +97,8 @@
       "target_price": 150,
       "retailers": {
         "newegg": "https://www.newegg.com/corsair-rmx-series-atx-3-1-compatible-1000-w-cybenetics-gold-power-supply-black-rm1000e/p/N82E16817139337",
-        "microcenter": "https://www.microcenter.com/product/689530/corsair-rme-series-rm1000e-1000-watt-cybenetics-gold-atx-fully-modular-power-supply-atx-31-compatible?storeid=085"
+        "microcenter": "https://www.microcenter.com/product/689530/corsair-rme-series-rm1000e-1000-watt-cybenetics-gold-atx-fully-modular-power-supply-atx-31-compatible?storeid=085",
+        "amazon": "https://www.amazon.com/dp/B0DPR5RZ1T"
       }
     }
   ],

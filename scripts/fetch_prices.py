@@ -10,6 +10,7 @@ import json
 import os
 import re
 import urllib.request
+import xml.etree.ElementTree as ET
 from datetime import datetime, timezone
 
 import cloudscraper
@@ -22,6 +23,7 @@ FLAT_THRESHOLD = 0.02
 
 TELEGRAM_BOT_TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN")
 TELEGRAM_CHAT_ID = os.environ.get("TELEGRAM_CHAT_ID")
+CCC_RSS_URL = os.environ.get("CCC_RSS_URL")
 
 HEADERS = {
     "User-Agent": (
@@ -45,6 +47,32 @@ def fetch_html_mc(url):
     resp = scraper.get(url, timeout=20)
     resp.raise_for_status()
     return resp.text
+
+
+def fetch_ccc_rss():
+    """Fetch the CCC alerts RSS feed and return {asin: current_price}."""
+    content = fetch_html(CCC_RSS_URL)
+    root = ET.fromstring(content)
+    prices = {}
+    for item in root.findall(".//item"):
+        title = item.findtext("title") or ""
+
+        # Serialize description back to string so href attributes are preserved
+        desc_el = item.find("description")
+        desc_raw = ET.tostring(desc_el, encoding="unicode") if desc_el is not None else ""
+
+        asin_m = re.search(r"camelcamelcamel\.com/product/([A-Z0-9]{10})(?![A-Z0-9])", desc_raw)
+        if not asin_m:
+            continue
+
+        price_m = re.search(r"\$([\d,]+\.?\d*)", title)
+        if not price_m:
+            price_m = re.search(r"currently:\s*\$([\d,]+\.?\d*)", desc_raw)
+        if not price_m:
+            continue
+
+        prices[asin_m.group(1)] = float(price_m.group(1).replace(",", ""))
+    return prices
 
 
 def parse_newegg(html):
@@ -155,6 +183,8 @@ def append_history(history, results, date_str):
             entry["newegg"] = data["newegg"]
         if data.get("microcenter") is not None:
             entry["microcenter"] = data["microcenter"]
+        if data.get("amazon") is not None:
+            entry["amazon"] = data["amazon"]
         if data.get("lowest_price") is not None:
             entry["lowest"] = data["lowest_price"]
         if part_id not in history:
@@ -188,8 +218,9 @@ def format_telegram(results, parts_meta, budget, extras_total):
 
         ne = data.get("newegg")
         mc = data.get("microcenter")
+        amz = data.get("amazon")
         prices_str = "  ".join(
-            f"{r} ${p:.0f}" for r, p in [("NE", ne), ("MC", mc)] if p is not None
+            f"{r} ${p:.0f}" for r, p in [("NE", ne), ("MC", mc), ("AMZ", amz)] if p is not None
         )
 
         if lowest is None:
@@ -237,6 +268,14 @@ def main(dry_run=False):
     prev_parts = previous.get("parts", {})
     extras_total = sum(e["fixed_price"] for e in build.get("extras", []))
 
+    ccc_prices = {}
+    if CCC_RSS_URL:
+        try:
+            ccc_prices = fetch_ccc_rss()
+            print(f"CCC RSS: {len(ccc_prices)} Amazon prices fetched")
+        except Exception as e:
+            print(f"CCC RSS ERROR: {e}")
+
     results = {}
     parts_meta = {}
 
@@ -248,7 +287,7 @@ def main(dry_run=False):
         part_result = {}
 
         for retailer, url in retailers.items():
-            if not url:
+            if not url or retailer == "amazon":
                 continue
             print(f"Fetching {part['name']} from {retailer} ...")
             try:
@@ -259,6 +298,13 @@ def main(dry_run=False):
                 print(f"  ERROR ({retailer}): {e}\n    {url}")
                 if retailer in prev:
                     part_result[retailer] = prev[retailer]
+
+        amazon_url = retailers.get("amazon")
+        if amazon_url and ccc_prices:
+            asin_m = re.search(r"/dp/([A-Z0-9]{10})", amazon_url)
+            if asin_m and asin_m.group(1) in ccc_prices:
+                part_result["amazon"] = ccc_prices[asin_m.group(1)]
+                print(f"  amazon (CCC): ${ccc_prices[asin_m.group(1)]:.2f}")
 
         if not part_result:
             results[part_id] = prev
