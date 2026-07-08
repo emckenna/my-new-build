@@ -1,5 +1,5 @@
 {
-  "last_fetched": "2026-07-08T10:22:05.690806+00:00",
+  "last_fetched": "2026-07-08T14:23:13.366316+00:00",
   "parts": {
     "cpu": {
       "newegg": 489.0,
@@ -26,8 +26,8 @@
       "movement": "flat"
     },
     "motherboard": {
-      "newegg": 196.0,
-      "lowest_price": 196.0,
+      "newegg": 199.0,
+      "lowest_price": 199.0,
       "lowest_at": "newegg",
       "previous_lowest": 196.0,
       "movement": "flat"
@@ -49,7 +49,7 @@
       "movement": "flat"
     },
     "psu": {
-      "newegg": 186.0,
+      "newegg": 189.0,
       "microcenter": 146.99,
       "lowest_price": 146.99,
       "lowest_at": "microcenter",
