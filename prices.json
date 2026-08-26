@@ -1,5 +1,5 @@
 {
-  "last_fetched": "2026-08-25T20:32:29.906470+00:00",
+  "last_fetched": "2026-08-26T01:35:18.864358+00:00",
   "parts": {
     "cpu": {
       "newegg": 484.0,
@@ -50,11 +50,11 @@
     },
     "psu": {
       "newegg": 169.0,
-      "microcenter": 139.99,
-      "lowest_price": 139.99,
-      "lowest_at": "microcenter",
+      "microcenter": 189.99,
+      "lowest_price": 169.0,
+      "lowest_at": "newegg",
       "previous_lowest": 139.99,
-      "movement": "flat"
+      "movement": "up"
     }
   }
 }
