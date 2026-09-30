@@ -1,5 +1,5 @@
 {
-  "last_fetched": "2026-09-30T04:47:28.550438+00:00",
+  "last_fetched": "2026-09-30T14:44:57.096659+00:00",
   "parts": {
     "cpu": {
       "newegg": 499.0,
@@ -26,11 +26,11 @@
       "movement": "flat"
     },
     "motherboard": {
-      "newegg": 199.0,
-      "lowest_price": 199.0,
+      "newegg": 189.0,
+      "lowest_price": 189.0,
       "lowest_at": "newegg",
       "previous_lowest": 199.0,
-      "movement": "flat"
+      "movement": "down"
     },
     "storage": {
       "newegg": 665.0,
