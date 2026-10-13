@@ -1,8 +1,8 @@
 {
-  "last_fetched": "2026-10-12T17:33:38.227256+00:00",
+  "last_fetched": "2026-10-13T01:54:05.224310+00:00",
   "parts": {
     "cpu": {
-      "newegg": 499.0,
+      "newegg": 484.0,
       "microcenter": 459.99,
       "amazon": 484.0,
       "lowest_price": 459.99,
@@ -13,6 +13,7 @@
     "gpu": {
       "newegg": 1879.0,
       "microcenter": 1439.99,
+      "amazon": 1679.99,
       "lowest_price": 1439.99,
       "lowest_at": "microcenter",
       "previous_lowest": 1439.99,
@@ -30,16 +31,16 @@
       "newegg": 229.0,
       "lowest_price": 229.0,
       "lowest_at": "newegg",
-      "previous_lowest": 189.0,
-      "movement": "up"
+      "previous_lowest": 229.0,
+      "movement": "flat"
     },
     "storage": {
-      "newegg": 665.0,
+      "newegg": 699.0,
       "microcenter": 799.99,
-      "lowest_price": 665.0,
+      "lowest_price": 699.0,
       "lowest_at": "newegg",
       "previous_lowest": 665.0,
-      "movement": "flat"
+      "movement": "up"
     },
     "case": {
       "newegg": 236.0,
@@ -55,8 +56,8 @@
       "microcenter": 189.99,
       "lowest_price": 159.0,
       "lowest_at": "newegg",
-      "previous_lowest": 132.0,
-      "movement": "up"
+      "previous_lowest": 159.0,
+      "movement": "flat"
     }
   }
 }
