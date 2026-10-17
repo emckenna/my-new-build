@@ -1,10 +1,10 @@
 {
-  "last_fetched": "2026-10-17T18:17:01.699102+00:00",
+  "last_fetched": "2026-10-17T22:02:35.198048+00:00",
   "parts": {
     "cpu": {
       "newegg": 484.0,
       "microcenter": 459.99,
-      "amazon": 484.0,
+      "amazon": 483.99,
       "lowest_price": 459.99,
       "lowest_at": "microcenter",
       "previous_lowest": 459.99,
@@ -13,7 +13,6 @@
     "gpu": {
       "newegg": 1879.0,
       "microcenter": 1439.99,
-      "amazon": 1679.99,
       "lowest_price": 1439.99,
       "lowest_at": "microcenter",
       "previous_lowest": 1439.99,
