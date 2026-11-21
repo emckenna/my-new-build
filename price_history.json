@@ -1151,10 +1151,8 @@
     },
     {
       "date": "2026-11-21",
-      "newegg": 484.0,
-      "microcenter": 459.99,
-      "amazon": 445.99,
-      "lowest": 445.99
+      "amazon": 445.94,
+      "lowest": 445.94
     }
   ],
   "gpu": [
@@ -2307,9 +2305,8 @@
     },
     {
       "date": "2026-11-21",
-      "newegg": 1879.0,
-      "microcenter": 1439.99,
-      "lowest": 1439.99
+      "amazon": 2419.0,
+      "lowest": 2419.0
     }
   ],
   "ram": [
@@ -3440,9 +3437,8 @@
     },
     {
       "date": "2026-11-21",
-      "newegg": 785.0,
-      "microcenter": 899.99,
-      "lowest": 785.0
+      "amazon": 1284.77,
+      "lowest": 1284.77
     }
   ],
   "motherboard": [
@@ -4388,8 +4384,8 @@
     },
     {
       "date": "2026-11-21",
-      "newegg": 229.0,
-      "lowest": 229.0
+      "amazon": 179.99,
+      "lowest": 179.99
     }
   ],
   "storage": [
@@ -5514,9 +5510,8 @@
     },
     {
       "date": "2026-11-21",
-      "newegg": 665.0,
-      "microcenter": 799.99,
-      "lowest": 665.0
+      "amazon": 899.0,
+      "lowest": 899.0
     }
   ],
   "case": [
@@ -6681,10 +6676,8 @@
     },
     {
       "date": "2026-11-21",
-      "newegg": 236.0,
-      "microcenter": 194.99,
       "amazon": 239.99,
-      "lowest": 194.99
+      "lowest": 239.99
     }
   ],
   "psu": [
@@ -7808,14 +7801,22 @@
     },
     {
       "date": "2026-11-21",
-      "newegg": 139.0,
-      "microcenter": 189.99,
-      "lowest": 139.0
+      "amazon": 121.59,
+      "lowest": 121.59
     }
   ],
   "ram_32gb": [
     {
-      "date": "2026-11-21"
+      "date": "2026-11-21",
+      "amazon": 639.99,
+      "lowest": 639.99
+    }
+  ],
+  "storage_2tb": [
+    {
+      "date": "2026-11-21",
+      "amazon": 419.99,
+      "lowest": 419.99
     }
   ]
 }

@@ -1,12 +1,16 @@
 {
-  "last_fetched": "2026-11-21T13:38:31.807956+00:00",
+  "last_fetched": "2026-11-21T13:41:35.571549+00:00",
   "parts": {
     "cpu": {
       "newegg": 484.0,
       "microcenter": 459.99,
-      "amazon": 445.99,
-      "lowest_price": 445.99,
+      "amazon": 445.94,
+      "fetched_at": {
+        "amazon": "2026-11-21T13:41:35.571549+00:00"
+      },
+      "lowest_price": 445.94,
       "lowest_at": "amazon",
+      "stale": false,
       "previous_lowest": 445.99,
       "movement": "flat"
     },
@@ -14,32 +18,48 @@
       "newegg": 1879.0,
       "microcenter": 1439.99,
       "amazon": 2419.0,
-      "lowest_price": 1439.99,
-      "lowest_at": "microcenter",
+      "fetched_at": {
+        "amazon": "2026-11-21T13:41:35.571549+00:00"
+      },
+      "lowest_price": 2419.0,
+      "lowest_at": "amazon",
+      "stale": false,
       "previous_lowest": 1439.99,
-      "movement": "flat"
+      "movement": "up"
     },
     "ram": {
       "newegg": 785.0,
       "microcenter": 899.99,
       "amazon": 1284.77,
-      "lowest_price": 785.0,
-      "lowest_at": "newegg",
+      "fetched_at": {
+        "amazon": "2026-11-21T13:41:35.571549+00:00"
+      },
+      "lowest_price": 1284.77,
+      "lowest_at": "amazon",
+      "stale": false,
       "previous_lowest": 785.0,
-      "movement": "flat"
+      "movement": "up"
     },
     "ram_32gb": {
       "amazon": 639.99,
+      "fetched_at": {
+        "amazon": "2026-11-21T13:41:35.571549+00:00"
+      },
       "lowest_price": 639.99,
       "lowest_at": "amazon",
+      "stale": false,
       "previous_lowest": 639.99,
       "movement": "flat"
     },
     "motherboard": {
       "newegg": 229.0,
       "amazon": 179.99,
+      "fetched_at": {
+        "amazon": "2026-11-21T13:41:35.571549+00:00"
+      },
       "lowest_price": 179.99,
       "lowest_at": "amazon",
+      "stale": false,
       "previous_lowest": 179.99,
       "movement": "flat"
     },
@@ -47,28 +67,51 @@
       "newegg": 665.0,
       "microcenter": 799.99,
       "amazon": 899.0,
-      "lowest_price": 665.0,
-      "lowest_at": "newegg",
+      "fetched_at": {
+        "amazon": "2026-11-21T13:41:35.571549+00:00"
+      },
+      "lowest_price": 899.0,
+      "lowest_at": "amazon",
+      "stale": false,
       "previous_lowest": 665.0,
-      "movement": "flat"
+      "movement": "up"
+    },
+    "storage_2tb": {
+      "amazon": 419.99,
+      "fetched_at": {
+        "amazon": "2026-11-21T13:41:35.571549+00:00"
+      },
+      "lowest_price": 419.99,
+      "lowest_at": "amazon",
+      "stale": false,
+      "previous_lowest": null,
+      "movement": "new"
     },
     "case": {
       "newegg": 236.0,
       "microcenter": 194.99,
       "amazon": 239.99,
-      "lowest_price": 194.99,
-      "lowest_at": "microcenter",
+      "fetched_at": {
+        "amazon": "2026-11-21T13:41:35.571549+00:00"
+      },
+      "lowest_price": 239.99,
+      "lowest_at": "amazon",
+      "stale": false,
       "previous_lowest": 194.99,
-      "movement": "flat"
+      "movement": "up"
     },
     "psu": {
       "newegg": 139.0,
       "microcenter": 189.99,
       "amazon": 121.59,
+      "fetched_at": {
+        "amazon": "2026-11-21T13:41:35.571549+00:00"
+      },
       "lowest_price": 121.59,
       "lowest_at": "amazon",
-      "previous_lowest": 139.0,
-      "movement": "down"
+      "stale": false,
+      "previous_lowest": 121.59,
+      "movement": "flat"
     }
   }
 }
