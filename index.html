@@ -258,19 +258,15 @@
       let variableTotal = 0;
       const costItems = [];
 
-      tbody.insertAdjacentHTML('beforeend',
-        `<tr><td colspan="10" class="section-label">Tracked Parts</td></tr>`);
+      const inBuild = parts.parts.filter(p => p.in_build !== false);
+      const watching = parts.parts.filter(p => p.in_build === false);
 
-      for (const part of parts.parts) {
+      function partRow(part, note) {
         const p = priceMap[part.id] ?? {};
         const nePrice = p.newegg ?? null;
         const mcPrice = p.microcenter ?? null;
         const lowest = p.lowest_price ?? null;
         const mov = p.movement ?? 'new';
-        if (lowest != null) {
-          variableTotal += lowest;
-          costItems.push({ name: part.name, cost: lowest });
-        }
 
         const availPrices = [nePrice, mcPrice].filter(x => x != null);
         const avg = availPrices.length > 0
@@ -281,7 +277,7 @@
 
         tbody.insertAdjacentHTML('beforeend', `
           <tr>
-            <td>${nameCell(part.name, part.url)}</td>
+            <td>${nameCell(part.name, part.url)}${note ? `<div class="part-note">${note}</div>` : ''}</td>
             <td>${part.category}</td>
             <td>${retailerLink(retailers.newegg, 'NE', nePrice)}</td>
             <td>${retailerLink(retailers.microcenter, 'MC', mcPrice)}</td>
@@ -293,6 +289,40 @@
             <td>${copyBtn(part.name)}</td>
           </tr>
         `);
+        return lowest;
+      }
+
+      tbody.insertAdjacentHTML('beforeend',
+        `<tr><td colspan="10" class="section-label">Tracked Parts</td></tr>`);
+
+      for (const part of inBuild) {
+        const lowest = partRow(part);
+        if (lowest != null) {
+          variableTotal += lowest;
+          costItems.push({ name: part.name, cost: lowest });
+        }
+      }
+
+      if (watching.length > 0) {
+        tbody.insertAdjacentHTML('beforeend',
+          `<tr><td colspan="10" class="section-label">Watching — Not in Build Total</td></tr>`);
+
+        for (const part of watching) {
+          const lowest = priceMap[part.id]?.lowest_price ?? null;
+          let note = part.note ?? '';
+          const swapFor = part.alternative_to && parts.parts.find(x => x.id === part.alternative_to);
+          const swapLowest = swapFor && priceMap[swapFor.id]?.lowest_price;
+          if (swapFor && lowest != null && swapLowest != null) {
+            const diff = lowest - swapLowest;
+            note = `Swap for ${swapFor.name}: ${diff <= 0 ? 'saves ' + fmt(-diff) : 'costs ' + fmt(diff) + ' more'}`;
+          } else if (swapFor) {
+            note = `Alternative to ${swapFor.name}`;
+          }
+          if (part.target_price && lowest != null) {
+            note += `${note ? ' · ' : ''}target ${fmt(part.target_price)}`;
+          }
+          partRow(part, note);
+        }
       }
 
       tbody.insertAdjacentHTML('beforeend',
@@ -346,7 +376,7 @@
       vsEl.textContent = variableTotal > 0 ? (vsBudget >= 0 ? fmt(vsBudget) + ' under' : fmt(Math.abs(vsBudget)) + ' over') : '—';
       vsEl.className = 'value ' + (vsBudget >= 0 ? 'green' : 'red');
 
-      const partIds = parts.parts.map(p => p.id);
+      const partIds = inBuild.map(p => p.id);
       const totalHistory = buildTotalHistory(histMap, partIds, fixedTotal);
       document.getElementById('total-sparkline').innerHTML = totalSparkline(totalHistory);
 

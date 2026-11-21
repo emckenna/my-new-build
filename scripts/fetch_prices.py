@@ -214,6 +214,8 @@ def format_telegram(results, parts_meta, budget, extras_total):
         prev = data.get("previous_lowest")
         mov = data.get("movement", "new")
         name = parts_meta[part_id]["name"]
+        if not parts_meta[part_id].get("in_build", True):
+            name += " (not in build)"
         icon = {"up": "🔴", "down": "🟢", "flat": "➖", "new": "🆕"}.get(mov, "➖")
 
         ne = data.get("newegg")
@@ -235,7 +237,8 @@ def format_telegram(results, parts_meta, budget, extras_total):
         else:
             lines.append(f"{icon} {name} — ${lowest:.0f}  [{prices_str}]")
 
-        variable_total += lowest
+        if parts_meta[part_id].get("in_build", True):
+            variable_total += lowest
 
     grand_total = variable_total + extras_total
     vs_budget = budget - grand_total

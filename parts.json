@@ -7,7 +7,7 @@
     "name": "Whisper Beast 2026",
     "description": "Whisper-quiet 1440p gaming, same-box Twitch streaming via RTX 5080 NVENC, and Portal SDK dev build. Target <26 dBA under load. AM5 platform for 5+ year upgrade path. Wired 2.5GbE for low-latency gaming.",
     "budget": 3100,
-    "last_updated": "2026-05-08"
+    "last_updated": "2026-11-21"
   },
   "parts": [
     {
@@ -34,7 +34,9 @@
         "newegg": "https://www.newegg.com/msi-rtx-5080-16g-ventus-3x-oc-geforce-rtx-5080-16gb-graphics-card/p/N82E16814137930",
         "microcenter": "https://www.microcenter.com/product/693011/msi-nvidia-geforce-rtx-5080-ventus-3x-overclocked-triple-fan-16gb-gddr7-pcie-50-graphics-card?storeid=085",
         "amazon": "https://www.amazon.com/dp/B0DSWQNGYF"
-      }
+      },
+      "in_build": false,
+      "note": "Deferred — using existing RTX 3080 for now. Still tracked; buy when it nears target."
     },
     {
       "id": "ram",
@@ -47,6 +49,21 @@
         "newegg": "https://www.newegg.com/g-skill-64gb-ddr5-6000/p/N82E16820374518",
         "microcenter": "https://www.microcenter.com/product/668981/gskill-flare-x5-series-64gb-(2-x-32gb)-ddr5-6000-pc5-48000-cl30-dual-channel-desktop-memory-kit-f5-6000j3040g32gx2-fx5-black?storeid=085",
         "amazon": "https://www.amazon.com/dp/B0CGQ3KS8X"
+      }
+    },
+    {
+      "id": "ram_32gb",
+      "name": "G.Skill Flare X5 32GB DDR5-6000 CL30",
+      "category": "memory",
+      "description": "Budget alternative to the 64GB kit. 2x16GB, same EXPO CL30 timings. Plenty for 1440p gaming + OBS; tighter for heavy Portal SDK sessions. Upgrading to 64GB later means replacing the kit (4 DIMMs on AM5 won't hold 6000).",
+      "url": "https://www.gskill.com/product/165/396/1673491242/F5-6000J3038F16GX2-FX5",
+      "target_price": 110,
+      "in_build": false,
+      "alternative_to": "ram",
+      "retailers": {
+        "newegg": "https://www.newegg.com/g-skill-flare-x5-32gb-2-x-16gb-ddr5-6000-pc5-48000-cas-latency-cl30-desktop-memory-black/p/N82E16820374783",
+        "microcenter": "https://www.microcenter.com/product/661189/gskill-flare-x5-series-32gb-(2-x-16gb)-ddr5-6000-pc5-48000-cl30-dual-channel-desktop-memory-kit-f5-6000j3038f16gx2-fx5-black?storeid=085",
+        "amazon": "https://www.amazon.com/dp/B0C1TKSDKR"
       }
     },
     {
