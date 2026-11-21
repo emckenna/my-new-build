@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """
-Fetch current prices from Newegg and Microcenter for all tracked parts,
+Fetch current prices from Newegg, Microcenter, Amazon (via CCC RSS) and
+Pricify's weekly open data (pricify.ai, CC BY 4.0) for all tracked parts,
 update prices.json, and send a Telegram summary if prices moved.
 
 Dependencies: beautifulsoup4 cloudscraper (pip install beautifulsoup4 cloudscraper)
@@ -21,7 +22,10 @@ PRICES_FILE = "prices.json"
 HISTORY_FILE = "price_history.json"
 FLAT_THRESHOLD = 0.02
 STALE_HOURS = 48
-RETAILERS = ("newegg", "microcenter", "amazon", "amazon_3p")
+# Pricify publishes weekly, so its newest price can be up to ~8 days old
+STALE_HOURS_BY_SOURCE = {"pricify": 24 * 9}
+RETAILERS = ("newegg", "microcenter", "amazon", "amazon_3p", "pricify")
+PRICIFY_URL = "https://raw.githubusercontent.com/pricify-ai/pc-hardware-prices/main/latest/json/{site}.json"
 
 TELEGRAM_BOT_TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN")
 TELEGRAM_CHAT_ID = os.environ.get("TELEGRAM_CHAT_ID")
@@ -84,6 +88,24 @@ def fetch_ccc_rss():
             kind, float(price_m.group(1).replace(",", ""))
         )
     return prices
+
+
+def fetch_pricify(site):
+    """Return {part_number: product} from Pricify's latest weekly release for a site."""
+    data = json.loads(fetch_html(PRICIFY_URL.format(site=site)))
+    print(f"Pricify {site}: {data.get('week')}, {len(data.get('products', []))} products")
+    return {p["part_number"].upper(): p for p in data.get("products", []) if p.get("part_number")}
+
+
+def pricify_price(product):
+    """Latest daily low for a Pricify product: (price, as-of timestamp, store)."""
+    days = [d for d in product.get("daily", []) if d.get("low") is not None]
+    if not days:
+        return None
+    last = days[-1]
+    # Dates are US Eastern; treat the price as of the end of that day
+    as_of = datetime.fromisoformat(last["date"] + "T23:59:59-05:00").astimezone(timezone.utc)
+    return last["low"], as_of.isoformat(), last.get("low_store")
 
 
 def parse_newegg(html):
@@ -187,17 +209,17 @@ def load_history():
         return {}
 
 
-def is_fresh(fetched_at, now):
+def is_fresh(fetched_at, now, source=None):
     if not fetched_at:
         return False
     age = now - datetime.fromisoformat(fetched_at)
-    return age.total_seconds() < STALE_HOURS * 3600
+    return age.total_seconds() < STALE_HOURS_BY_SOURCE.get(source, STALE_HOURS) * 3600
 
 
 def fresh_prices(data, now):
-    """Retailer prices in a part result that were fetched within STALE_HOURS."""
+    """Retailer prices in a part result that were fetched recently enough to count."""
     fetched = data.get("fetched_at", {})
-    return {r: data[r] for r in RETAILERS if data.get(r) is not None and is_fresh(fetched.get(r), now)}
+    return {r: data[r] for r in RETAILERS if data.get(r) is not None and is_fresh(fetched.get(r), now, r)}
 
 
 def append_history(history, results, date_str, now):
@@ -238,7 +260,7 @@ def format_telegram(results, parts_meta, budget, extras_total, now):
             name += " (not in build)"
         icon = {"up": "🔴", "down": "🟢", "flat": "➖", "new": "🆕"}.get(mov, "➖")
 
-        labels = {"newegg": "NE", "microcenter": "MC", "amazon": "AMZ", "amazon_3p": "AMZ-3P"}
+        labels = {"newegg": "NE", "microcenter": "MC", "amazon": "AMZ", "amazon_3p": "AMZ-3P", "pricify": "PFY"}
         prices_str = "  ".join(f"{labels[r]} ${p:.0f}" for r, p in fresh_prices(data, now).items())
         if data.get("stale"):
             prices_str = f"stale — last seen at {data.get('lowest_at')}"
@@ -297,6 +319,13 @@ def main(dry_run=False):
         except Exception as e:
             print(f"CCC RSS ERROR: {e}")
 
+    pricify = {}
+    for site in sorted({p["pricify"]["site"] for p in build["parts"] if p.get("pricify")}):
+        try:
+            pricify[site] = fetch_pricify(site)
+        except Exception as e:
+            print(f"Pricify {site} ERROR: {e}")
+
     now = datetime.now(timezone.utc)
     results = {}
     parts_meta = {}
@@ -340,6 +369,23 @@ def main(dry_run=False):
             elif amazon_url:
                 carry_forward(kind)
 
+        extra = {}
+        pfy = part.get("pricify")
+        if pfy:
+            product = pricify.get(pfy["site"], {}).get(pfy["part_number"].upper())
+            got = pricify_price(product) if product else None
+            if got:
+                part_result["pricify"], fetched_at["pricify"], extra["pricify_store"] = got
+                extra["pricify_url"] = product.get("url")
+                print(f"  pricify: ${got[0]:.2f} at {got[2]} (as of {got[1][:10]})")
+            else:
+                if pfy["site"] in pricify:
+                    print(f"  pricify: not in this week's {pfy['site']} top 100")
+                carry_forward("pricify")
+                for k in ("pricify_store", "pricify_url"):
+                    if k in prev:
+                        extra[k] = prev[k]
+
         if not part_result:
             results[part_id] = prev
             continue
@@ -353,6 +399,7 @@ def main(dry_run=False):
 
         results[part_id] = {
             **part_result,
+            **extra,
             "fetched_at": fetched_at,
             "lowest_price": lowest,
             "lowest_at": min(pool, key=pool.get),

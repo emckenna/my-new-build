@@ -21,6 +21,10 @@
         "newegg": "https://www.newegg.com/amd-ryzen-7-9850x3d-ryzen-7-9000-series-granite-ridge-socket-am5-desktop-processor/p/N82E16819113934",
         "microcenter": "https://www.microcenter.com/product/706001/amd-ryzen-7-9850x3d-granite-ridge-am5-470ghz-8-core-boxed-processor-heatsink-not-included?storeid=085",
         "amazon": "https://www.amazon.com/dp/B0G8JMLXNQ"
+      },
+      "pricify": {
+        "site": "cpu.live",
+        "part_number": "100-100001973WOF"
       }
     },
     {
@@ -36,7 +40,11 @@
         "amazon": "https://www.amazon.com/dp/B0DSWQNGYF"
       },
       "in_build": false,
-      "note": "Deferred — using existing RTX 3080 for now. Still tracked; buy when it nears target."
+      "note": "Deferred — using existing RTX 3080 for now. Still tracked; buy when it nears target.",
+      "pricify": {
+        "site": "rtx.live",
+        "part_number": "RTX 5080 16G VENTUS 3X OC"
+      }
     },
     {
       "id": "ram",
@@ -49,6 +57,10 @@
         "newegg": "https://www.newegg.com/g-skill-64gb-ddr5-6000/p/N82E16820374518",
         "microcenter": "https://www.microcenter.com/product/668981/gskill-flare-x5-series-64gb-(2-x-32gb)-ddr5-6000-pc5-48000-cl30-dual-channel-desktop-memory-kit-f5-6000j3040g32gx2-fx5-black?storeid=085",
         "amazon": "https://www.amazon.com/dp/B0CGQ3KS8X"
+      },
+      "pricify": {
+        "site": "rams.live",
+        "part_number": "F5-6000J3040G32GX2-FX5"
       }
     },
     {
@@ -64,6 +76,10 @@
         "newegg": "https://www.newegg.com/g-skill-flare-x5-32gb-2-x-16gb-ddr5-6000-pc5-48000-cas-latency-cl30-desktop-memory-black/p/N82E16820374783",
         "microcenter": "https://www.microcenter.com/product/661189/gskill-flare-x5-series-32gb-(2-x-16gb)-ddr5-6000-pc5-48000-cl30-dual-channel-desktop-memory-kit-f5-6000j3038f16gx2-fx5-black?storeid=085",
         "amazon": "https://www.amazon.com/dp/B0C1TKSDKR"
+      },
+      "pricify": {
+        "site": "rams.live",
+        "part_number": "F5-6000J3038F16GX2-FX5"
       }
     },
     {
@@ -77,6 +93,10 @@
         "newegg": "https://www.newegg.com/asrock-x870-livemixer-wifi-atx-motherboard-amd-x870-am5/p/N82E16813162233",
         "microcenter": null,
         "amazon": "https://www.amazon.com/dp/B0FN44YQKY"
+      },
+      "pricify": {
+        "site": "motherboards.live",
+        "part_number": "X870 LiveMixer WiFi"
       }
     },
     {
@@ -90,6 +110,10 @@
         "newegg": "https://www.newegg.com/western-digital-4tb-black-sn850x-nvme/p/N82E16820250244",
         "microcenter": "https://www.microcenter.com/product/652494/wd-black-sn850x-4tb-112l-3d-tlc-nand-flash-pcie-gen-4-x4-nvme-m2-internal-ssd?storeid=085",
         "amazon": "https://www.amazon.com/dp/B0B7CQ2CHH"
+      },
+      "pricify": {
+        "site": "ssd.live",
+        "part_number": "WDS400T2X0E"
       }
     },
     {
@@ -105,6 +129,10 @@
         "newegg": "https://www.newegg.com/western-digital-2tb-black-sn850x-nvme/p/N82E16820250247",
         "microcenter": "https://www.microcenter.com/product/652493/wd-black-sn850x-2tb-112l-3d-tlc-nand-flash-pcie-gen-4-x4-nvme-m2-internal-ssd?storeid=085",
         "amazon": "https://www.amazon.com/dp/B0B7CMZ3QH"
+      },
+      "pricify": {
+        "site": "ssd.live",
+        "part_number": "WDS200T2X0E"
       }
     },
     {
@@ -118,6 +146,10 @@
         "newegg": "https://www.newegg.com/black-fractal-design-define-7-atx-mid-tower/p/N82E16811352109",
         "microcenter": "https://www.microcenter.com/product/690686/fractal-design-define-7-tempered-glass-atx-mid-tower-computer-case-black?storeid=085",
         "amazon": "https://www.amazon.com/dp/B08146JLXK"
+      },
+      "pricify": {
+        "site": "pccase.live",
+        "part_number": "FD-C-DEF7A-01"
       }
     },
     {
@@ -131,6 +163,10 @@
         "newegg": "https://www.newegg.com/corsair-rmx-series-atx-3-1-compatible-1000-w-cybenetics-gold-power-supply-black-rm1000e/p/N82E16817139337",
         "microcenter": "https://www.microcenter.com/product/689530/corsair-rme-series-rm1000e-1000-watt-cybenetics-gold-atx-fully-modular-power-supply-atx-31-compatible?storeid=085",
         "amazon": "https://www.amazon.com/dp/B0DPR5RZ1T"
+      },
+      "pricify": {
+        "site": "psu.live",
+        "part_number": "CP-9020297-NA"
       }
     }
   ],

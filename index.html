@@ -50,6 +50,7 @@
         <th>NE</th>
         <th>MC</th>
         <th>AMZ</th>
+        <th title="Pricify weekly open data — lowest store price (pricify.ai)">PFY</th>
         <th>Avg</th>
         <th>Lowest</th>
         <th>Movement</th>
@@ -95,6 +96,7 @@
         { key: 'newegg', color: '#60a5fa' },
         { key: 'microcenter', color: '#a78bfa' },
         { key: 'amazon', color: '#fb923c' },
+        { key: 'pricify', color: '#4ade80' },
       ];
 
       const allVals = [];
@@ -263,12 +265,14 @@
 
       // A retailer price is fresh if it was fetched within 48h of the last run
       const fetchRef = prices?.last_fetched ? Date.parse(prices.last_fetched) : Date.now();
-      const isFresh = (ts) => ts != null && fetchRef - Date.parse(ts) < 48 * 3600 * 1000;
+      // Pricify publishes weekly, so it gets a longer window (matches fetch_prices.py)
+      const staleHours = { pricify: 24 * 9 };
+      const isFresh = (ts, source) => ts != null && fetchRef - Date.parse(ts) < (staleHours[source] ?? 48) * 3600 * 1000;
 
-      function priceCell(url, label, price, fetchedAt) {
+      function priceCell(url, label, price, fetchedAt, source) {
         if (!url) return '—';
         if (price == null) return retailerLink(url, label, null);
-        if (isFresh(fetchedAt)) return retailerLink(url, label, price);
+        if (isFresh(fetchedAt, source)) return retailerLink(url, label, price);
         const seen = fetchedAt ? 'last fetched ' + new Date(fetchedAt).toLocaleDateString() : 'not fetched recently';
         return `<a class="stale" href="${url}" target="_blank" rel="noopener" title="Stale — ${seen}">${fmt(price)}</a>`;
       }
@@ -279,14 +283,18 @@
         const lowest = p.lowest_price ?? null;
         const mov = p.movement ?? 'new';
 
-        const freshPrices = ['newegg', 'microcenter', 'amazon', 'amazon_3p']
-          .filter(r => p[r] != null && isFresh(fetched[r]))
+        const freshPrices = ['newegg', 'microcenter', 'amazon', 'amazon_3p', 'pricify']
+          .filter(r => p[r] != null && isFresh(fetched[r], r))
           .map(r => p[r]);
         const avg = freshPrices.length > 0
           ? freshPrices.reduce((a, b) => a + b, 0) / freshPrices.length
           : null;
 
         const retailers = part.retailers ?? {};
+        const pfyCell = p.pricify_url
+          ? priceCell(p.pricify_url, 'PFY', p.pricify, fetched.pricify, 'pricify') +
+            (p.pricify_store ? `<div class="part-note">${p.pricify_store}</div>` : '')
+          : '—';
         const amzCell = priceCell(retailers.amazon, 'AMZ', p.amazon, fetched.amazon) +
           (p.amazon_3p != null && retailers.amazon
             ? `<div class="part-note">3P ${priceCell(retailers.amazon, '3P', p.amazon_3p, fetched.amazon_3p)}</div>`
@@ -299,6 +307,7 @@
             <td>${priceCell(retailers.newegg, 'NE', p.newegg, fetched.newegg)}</td>
             <td>${priceCell(retailers.microcenter, 'MC', p.microcenter, fetched.microcenter)}</td>
             <td>${amzCell}</td>
+            <td>${pfyCell}</td>
             <td>${fmt(avg)}</td>
             <td>${p.stale ? `<span class="stale" title="No retailer price fetched in the last 48h">${fmt(lowest)}</span>` : fmt(lowest)}</td>
             <td>${movBadge(mov)}</td>
@@ -310,7 +319,7 @@
       }
 
       tbody.insertAdjacentHTML('beforeend',
-        `<tr><td colspan="10" class="section-label">Tracked Parts</td></tr>`);
+        `<tr><td colspan="11" class="section-label">Tracked Parts</td></tr>`);
 
       for (const part of inBuild) {
         const lowest = partRow(part);
@@ -322,7 +331,7 @@
 
       if (watching.length > 0) {
         tbody.insertAdjacentHTML('beforeend',
-          `<tr><td colspan="10" class="section-label">Watching — Not in Build Total</td></tr>`);
+          `<tr><td colspan="11" class="section-label">Watching — Not in Build Total</td></tr>`);
 
         for (const part of watching) {
           const lowest = priceMap[part.id]?.lowest_price ?? null;
@@ -343,7 +352,7 @@
       }
 
       tbody.insertAdjacentHTML('beforeend',
-        `<tr><td colspan="10" class="section-label">Fixed-Price Components</td></tr>`);
+        `<tr><td colspan="11" class="section-label">Fixed-Price Components</td></tr>`);
 
       let fixedTotal = 0;
       for (const extra of parts.extras) {
@@ -356,6 +365,7 @@
             <td>${retailerLink(er.newegg, 'NE', null)}</td>
             <td>${retailerLink(er.microcenter, 'MC', null)}</td>
             <td>${retailerLink(er.amazon, 'AMZ', null)}</td>
+            <td>—</td>
             <td>${fmt(extra.fixed_price)}</td>
             <td>${fmt(extra.fixed_price)}</td>
             <td>${movBadge('fixed')}</td>
@@ -378,7 +388,7 @@
 
       tbody.insertAdjacentHTML('beforeend', `
         <tr style="font-weight:700;border-top:2px solid #2d3748;">
-          <td colspan="6">Grand Total</td>
+          <td colspan="7">Grand Total</td>
           <td>${variableTotal > 0 ? fmt(grandTotal) : 'Prices pending'}</td>
           <td><span style="color:${vsBudget >= 0 ? '#4ade80' : '#f87171'};font-size:0.8rem">${variableTotal > 0 ? (vsBudget >= 0 ? fmt(vsBudget) + ' under budget' : fmt(Math.abs(vsBudget)) + ' over budget') : ''}</span></td>
           <td></td>
@@ -400,7 +410,7 @@
       if (prices?.last_fetched) {
         const d = new Date(prices.last_fetched);
         document.getElementById('last-updated').textContent = d.toLocaleString();
-        document.getElementById('meta').textContent = `Prices last fetched: ${d.toUTCString()}`;
+        document.getElementById('meta').innerHTML = `Prices last fetched: ${d.toUTCString()} · PFY prices from <a href="https://pricify.ai" target="_blank" rel="noopener">Pricify (pricify.ai)</a>, CC BY 4.0, updated weekly`;
       } else {
         document.getElementById('last-updated').textContent = 'Not yet fetched';
       }
