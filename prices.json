@@ -1,49 +1,53 @@
 {
-  "last_fetched": "2026-11-21T13:41:35.571549+00:00",
+  "last_fetched": "2026-11-21T13:46:56.411587+00:00",
   "parts": {
     "cpu": {
       "newegg": 484.0,
       "microcenter": 459.99,
       "amazon": 445.94,
+      "pricify": 399.99,
+      "pricify_store": "Micro Center (in store)",
+      "pricify_url": "https://cpu.live/cpus/amd-ryzen-7-9850x3d",
       "fetched_at": {
-        "amazon": "2026-11-21T13:41:35.571549+00:00"
+        "amazon": "2026-11-21T13:46:56.411587+00:00",
+        "pricify": "2026-11-16T04:59:59+00:00"
       },
-      "lowest_price": 445.94,
-      "lowest_at": "amazon",
+      "lowest_price": 399.99,
+      "lowest_at": "pricify",
       "stale": false,
-      "previous_lowest": 445.99,
-      "movement": "flat"
+      "previous_lowest": 445.94,
+      "movement": "down"
     },
     "gpu": {
       "newegg": 1879.0,
       "microcenter": 1439.99,
       "amazon": 2419.0,
       "fetched_at": {
-        "amazon": "2026-11-21T13:41:35.571549+00:00"
+        "amazon": "2026-11-21T13:46:56.411587+00:00"
       },
       "lowest_price": 2419.0,
       "lowest_at": "amazon",
       "stale": false,
-      "previous_lowest": 1439.99,
-      "movement": "up"
+      "previous_lowest": 2419.0,
+      "movement": "flat"
     },
     "ram": {
       "newegg": 785.0,
       "microcenter": 899.99,
       "amazon": 1284.77,
       "fetched_at": {
-        "amazon": "2026-11-21T13:41:35.571549+00:00"
+        "amazon": "2026-11-21T13:46:56.411587+00:00"
       },
       "lowest_price": 1284.77,
       "lowest_at": "amazon",
       "stale": false,
-      "previous_lowest": 785.0,
-      "movement": "up"
+      "previous_lowest": 1284.77,
+      "movement": "flat"
     },
     "ram_32gb": {
       "amazon": 639.99,
       "fetched_at": {
-        "amazon": "2026-11-21T13:41:35.571549+00:00"
+        "amazon": "2026-11-21T13:46:56.411587+00:00"
       },
       "lowest_price": 639.99,
       "lowest_at": "amazon",
@@ -55,7 +59,7 @@
       "newegg": 229.0,
       "amazon": 179.99,
       "fetched_at": {
-        "amazon": "2026-11-21T13:41:35.571549+00:00"
+        "amazon": "2026-11-21T13:46:56.411587+00:00"
       },
       "lowest_price": 179.99,
       "lowest_at": "amazon",
@@ -68,24 +72,28 @@
       "microcenter": 799.99,
       "amazon": 899.0,
       "fetched_at": {
-        "amazon": "2026-11-21T13:41:35.571549+00:00"
+        "amazon": "2026-11-21T13:46:56.411587+00:00"
       },
       "lowest_price": 899.0,
       "lowest_at": "amazon",
       "stale": false,
-      "previous_lowest": 665.0,
-      "movement": "up"
+      "previous_lowest": 899.0,
+      "movement": "flat"
     },
     "storage_2tb": {
       "amazon": 419.99,
+      "pricify": 349.99,
+      "pricify_store": "Micro Center (in store)",
+      "pricify_url": "https://ssd.live/ssds/western-digital-wd_black-sn850x-2tb-m2-2280-nvme-pcie-40",
       "fetched_at": {
-        "amazon": "2026-11-21T13:41:35.571549+00:00"
+        "amazon": "2026-11-21T13:46:56.411587+00:00",
+        "pricify": "2026-11-16T04:59:59+00:00"
       },
-      "lowest_price": 419.99,
-      "lowest_at": "amazon",
+      "lowest_price": 349.99,
+      "lowest_at": "pricify",
       "stale": false,
-      "previous_lowest": null,
-      "movement": "new"
+      "previous_lowest": 419.99,
+      "movement": "down"
     },
     "case": {
       "newegg": 236.0,
@@ -97,15 +105,19 @@
       "lowest_price": 239.99,
       "lowest_at": "amazon",
       "stale": false,
-      "previous_lowest": 194.99,
-      "movement": "up"
+      "previous_lowest": 239.99,
+      "movement": "flat"
     },
     "psu": {
       "newegg": 139.0,
       "microcenter": 189.99,
       "amazon": 121.59,
+      "pricify": 121.59,
+      "pricify_store": "Micro Center (in store)",
+      "pricify_url": "https://psu.live/psus/corsair-rme-1000w-80-gold-fully-modular",
       "fetched_at": {
-        "amazon": "2026-11-21T13:41:35.571549+00:00"
+        "amazon": "2026-11-21T13:46:56.411587+00:00",
+        "pricify": "2026-11-16T04:59:59+00:00"
       },
       "lowest_price": 121.59,
       "lowest_at": "amazon",
