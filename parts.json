@@ -93,6 +93,21 @@
       }
     },
     {
+      "id": "storage_2tb",
+      "name": "WD Black SN850X 2TB NVMe Gen4",
+      "category": "storage",
+      "description": "Budget alternative to the 4TB. OS + main games on NVMe; the 870 EVO 1TB, 850 PRO and 840 PRO SATA SSDs carry over from TYRANT1 for the rest of the library.",
+      "url": "https://www.sandisk.com/products/ssd/internal-ssd/wd-black-sn850x-nvme-ssd?sku=WDS200T2X0E-00BCA0",
+      "target_price": 150,
+      "in_build": false,
+      "alternative_to": "storage",
+      "retailers": {
+        "newegg": "https://www.newegg.com/western-digital-2tb-black-sn850x-nvme/p/N82E16820250247",
+        "microcenter": "https://www.microcenter.com/product/652493/wd-black-sn850x-2tb-112l-3d-tlc-nand-flash-pcie-gen-4-x4-nvme-m2-internal-ssd?storeid=085",
+        "amazon": "https://www.amazon.com/dp/B0B7CMZ3QH"
+      }
+    },
+    {
       "id": "case",
       "name": "Fractal Design Define 7",
       "category": "case",
@@ -145,11 +160,11 @@
     },
     {
       "id": "os",
-      "name": "Windows 11 Pro",
+      "name": "Windows 11 Pro (reuse Win10 Pro key)",
       "category": "os",
-      "description": "Required for DX12 Ultimate and Arc Raiders optimization.",
+      "description": "Moving the Windows 10 Pro license from TYRANT1 — activates Windows 11 Pro. Only works if it is a retail key (OEM keys are tied to the old board); otherwise this is ~$140. Required for DX12 Ultimate and Arc Raiders optimization.",
       "url": "https://www.microsoft.com/en-us/windows/windows-11",
-      "fixed_price": 140
+      "fixed_price": 0
     }
   ]
 }

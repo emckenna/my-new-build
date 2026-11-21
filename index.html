@@ -261,29 +261,46 @@
       const inBuild = parts.parts.filter(p => p.in_build !== false);
       const watching = parts.parts.filter(p => p.in_build === false);
 
+      // A retailer price is fresh if it was fetched within 48h of the last run
+      const fetchRef = prices?.last_fetched ? Date.parse(prices.last_fetched) : Date.now();
+      const isFresh = (ts) => ts != null && fetchRef - Date.parse(ts) < 48 * 3600 * 1000;
+
+      function priceCell(url, label, price, fetchedAt) {
+        if (!url) return '—';
+        if (price == null) return retailerLink(url, label, null);
+        if (isFresh(fetchedAt)) return retailerLink(url, label, price);
+        const seen = fetchedAt ? 'last fetched ' + new Date(fetchedAt).toLocaleDateString() : 'not fetched recently';
+        return `<a class="stale" href="${url}" target="_blank" rel="noopener" title="Stale — ${seen}">${fmt(price)}</a>`;
+      }
+
       function partRow(part, note) {
         const p = priceMap[part.id] ?? {};
-        const nePrice = p.newegg ?? null;
-        const mcPrice = p.microcenter ?? null;
+        const fetched = p.fetched_at ?? {};
         const lowest = p.lowest_price ?? null;
         const mov = p.movement ?? 'new';
 
-        const availPrices = [nePrice, mcPrice].filter(x => x != null);
-        const avg = availPrices.length > 0
-          ? availPrices.reduce((a, b) => a + b, 0) / availPrices.length
+        const freshPrices = ['newegg', 'microcenter', 'amazon', 'amazon_3p']
+          .filter(r => p[r] != null && isFresh(fetched[r]))
+          .map(r => p[r]);
+        const avg = freshPrices.length > 0
+          ? freshPrices.reduce((a, b) => a + b, 0) / freshPrices.length
           : null;
 
         const retailers = part.retailers ?? {};
+        const amzCell = priceCell(retailers.amazon, 'AMZ', p.amazon, fetched.amazon) +
+          (p.amazon_3p != null && retailers.amazon
+            ? `<div class="part-note">3P ${priceCell(retailers.amazon, '3P', p.amazon_3p, fetched.amazon_3p)}</div>`
+            : '');
 
         tbody.insertAdjacentHTML('beforeend', `
           <tr>
             <td>${nameCell(part.name, part.url)}${note ? `<div class="part-note">${note}</div>` : ''}</td>
             <td>${part.category}</td>
-            <td>${retailerLink(retailers.newegg, 'NE', nePrice)}</td>
-            <td>${retailerLink(retailers.microcenter, 'MC', mcPrice)}</td>
-            <td>${retailerLink(retailers.amazon, 'AMZ', null)}</td>
+            <td>${priceCell(retailers.newegg, 'NE', p.newegg, fetched.newegg)}</td>
+            <td>${priceCell(retailers.microcenter, 'MC', p.microcenter, fetched.microcenter)}</td>
+            <td>${amzCell}</td>
             <td>${fmt(avg)}</td>
-            <td>${fmt(lowest)}</td>
+            <td>${p.stale ? `<span class="stale" title="No retailer price fetched in the last 48h">${fmt(lowest)}</span>` : fmt(lowest)}</td>
             <td>${movBadge(mov)}</td>
             <td>${sparkline(histMap[part.id])}</td>
             <td>${copyBtn(part.name)}</td>

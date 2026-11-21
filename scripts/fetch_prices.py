@@ -20,6 +20,8 @@ PARTS_FILE = "parts.json"
 PRICES_FILE = "prices.json"
 HISTORY_FILE = "price_history.json"
 FLAT_THRESHOLD = 0.02
+STALE_HOURS = 48
+RETAILERS = ("newegg", "microcenter", "amazon", "amazon_3p")
 
 TELEGRAM_BOT_TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN")
 TELEGRAM_CHAT_ID = os.environ.get("TELEGRAM_CHAT_ID")
@@ -50,12 +52,13 @@ def fetch_html_mc(url):
 
 
 def fetch_ccc_rss():
-    """Fetch the CCC alerts RSS feed and return {asin: current_price}."""
+    """Fetch the CCC alerts RSS feed and return {asin: {"amazon"|"amazon_3p": price}}."""
     content = fetch_html(CCC_RSS_URL)
     root = ET.fromstring(content)
     prices = {}
     for item in root.findall(".//item"):
         title = item.findtext("title") or ""
+        print(f"  CCC item: {title}")
 
         # Serialize description back to string so href attributes are preserved
         desc_el = item.find("description")
@@ -71,7 +74,15 @@ def fetch_ccc_rss():
         if not price_m:
             continue
 
-        prices[asin_m.group(1)] = float(price_m.group(1).replace(",", ""))
+        text = (title + " " + desc_raw).lower()
+        if re.search(r"\bused\b", text):
+            continue
+        kind = "amazon_3p" if re.search(r"3rd party|third party", text) else "amazon"
+
+        # Feed is newest-first; keep the most recent price for each ASIN + price type
+        prices.setdefault(asin_m.group(1), {}).setdefault(
+            kind, float(price_m.group(1).replace(",", ""))
+        )
     return prices
 
 
@@ -176,21 +187,30 @@ def load_history():
         return {}
 
 
-def append_history(history, results, date_str):
+def is_fresh(fetched_at, now):
+    if not fetched_at:
+        return False
+    age = now - datetime.fromisoformat(fetched_at)
+    return age.total_seconds() < STALE_HOURS * 3600
+
+
+def fresh_prices(data, now):
+    """Retailer prices in a part result that were fetched within STALE_HOURS."""
+    fetched = data.get("fetched_at", {})
+    return {r: data[r] for r in RETAILERS if data.get(r) is not None and is_fresh(fetched.get(r), now)}
+
+
+def append_history(history, results, date_str, now):
     for part_id, data in results.items():
-        entry = {"date": date_str}
-        if data.get("newegg") is not None:
-            entry["newegg"] = data["newegg"]
-        if data.get("microcenter") is not None:
-            entry["microcenter"] = data["microcenter"]
-        if data.get("amazon") is not None:
-            entry["amazon"] = data["amazon"]
-        if data.get("lowest_price") is not None:
+        entry = {"date": date_str, **fresh_prices(data, now)}
+        if data.get("lowest_price") is not None and not data.get("stale"):
             entry["lowest"] = data["lowest_price"]
         if part_id not in history:
             history[part_id] = []
-        # Avoid duplicate entries for the same date
-        if not history[part_id] or history[part_id][-1]["date"] != date_str:
+        # One entry per date; later runs that day replace it
+        if history[part_id] and history[part_id][-1]["date"] == date_str:
+            history[part_id][-1] = entry
+        else:
             history[part_id].append(entry)
     return history
 
@@ -204,7 +224,7 @@ def movement(old, new):
     return "up" if new > old else "down"
 
 
-def format_telegram(results, parts_meta, budget, extras_total):
+def format_telegram(results, parts_meta, budget, extras_total, now):
     lines = []
     variable_total = 0
     any_moved = False
@@ -218,12 +238,10 @@ def format_telegram(results, parts_meta, budget, extras_total):
             name += " (not in build)"
         icon = {"up": "🔴", "down": "🟢", "flat": "➖", "new": "🆕"}.get(mov, "➖")
 
-        ne = data.get("newegg")
-        mc = data.get("microcenter")
-        amz = data.get("amazon")
-        prices_str = "  ".join(
-            f"{r} ${p:.0f}" for r, p in [("NE", ne), ("MC", mc), ("AMZ", amz)] if p is not None
-        )
+        labels = {"newegg": "NE", "microcenter": "MC", "amazon": "AMZ", "amazon_3p": "AMZ-3P"}
+        prices_str = "  ".join(f"{labels[r]} ${p:.0f}" for r, p in fresh_prices(data, now).items())
+        if data.get("stale"):
+            prices_str = f"stale — last seen at {data.get('lowest_at')}"
 
         if lowest is None:
             lines.append(f"⚠️ {name} — no price fetched")
@@ -279,6 +297,7 @@ def main(dry_run=False):
         except Exception as e:
             print(f"CCC RSS ERROR: {e}")
 
+    now = datetime.now(timezone.utc)
     results = {}
     parts_meta = {}
 
@@ -287,7 +306,15 @@ def main(dry_run=False):
         parts_meta[part_id] = part
         retailers = part.get("retailers", {})
         prev = prev_parts.get(part_id, {})
+        prev_fetched = prev.get("fetched_at", {})
         part_result = {}
+        fetched_at = {}
+
+        def carry_forward(retailer):
+            if retailer in prev:
+                part_result[retailer] = prev[retailer]
+                if retailer in prev_fetched:
+                    fetched_at[retailer] = prev_fetched[retailer]
 
         for retailer, url in retailers.items():
             if not url or retailer == "amazon":
@@ -296,36 +323,43 @@ def main(dry_run=False):
             try:
                 price = fetch_price(retailer, url)
                 part_result[retailer] = price
+                fetched_at[retailer] = now.isoformat()
                 print(f"  {retailer}: ${price:.2f}")
             except Exception as e:
                 print(f"  ERROR ({retailer}): {e}\n    {url}")
-                if retailer in prev:
-                    part_result[retailer] = prev[retailer]
+                carry_forward(retailer)
 
         amazon_url = retailers.get("amazon")
-        if amazon_url and ccc_prices:
-            asin_m = re.search(r"/dp/([A-Z0-9]{10})", amazon_url)
-            if asin_m and asin_m.group(1) in ccc_prices:
-                part_result["amazon"] = ccc_prices[asin_m.group(1)]
-                print(f"  amazon (CCC): ${ccc_prices[asin_m.group(1)]:.2f}")
+        asin_m = re.search(r"/dp/([A-Z0-9]{10})", amazon_url or "")
+        ccc = ccc_prices.get(asin_m.group(1), {}) if asin_m else {}
+        for kind in ("amazon", "amazon_3p"):
+            if kind in ccc:
+                part_result[kind] = ccc[kind]
+                fetched_at[kind] = now.isoformat()
+                print(f"  {kind} (CCC): ${ccc[kind]:.2f}")
+            elif amazon_url:
+                carry_forward(kind)
 
         if not part_result:
             results[part_id] = prev
             continue
 
-        lowest = min(part_result.values())
+        # Only fresh prices count toward lowest; fall back to stale ones if nothing is fresh
+        fresh = fresh_prices({**part_result, "fetched_at": fetched_at}, now)
+        pool = fresh or part_result
+        lowest = min(pool.values())
         prev_lowest = prev.get("lowest_price")
         mov = movement(prev_lowest, lowest)
 
         results[part_id] = {
             **part_result,
+            "fetched_at": fetched_at,
             "lowest_price": lowest,
-            "lowest_at": min(part_result, key=part_result.get),
+            "lowest_at": min(pool, key=pool.get),
+            "stale": not fresh,
             "previous_lowest": prev_lowest,
             "movement": mov,
         }
-
-    now = datetime.now(timezone.utc)
     prices_out = {
         "last_fetched": now.isoformat(),
         "parts": results,
@@ -337,12 +371,12 @@ def main(dry_run=False):
         print(f"Wrote {PRICES_FILE}")
 
         history = load_history()
-        history = append_history(history, results, now.strftime("%Y-%m-%d"))
+        history = append_history(history, results, now.strftime("%Y-%m-%d"), now)
         with open(HISTORY_FILE, "w") as f:
             json.dump(history, f, indent=2)
         print(f"Wrote {HISTORY_FILE}")
 
-    msg, _ = format_telegram(results, parts_meta, build["build"]["budget"], extras_total)
+    msg, _ = format_telegram(results, parts_meta, build["build"]["budget"], extras_total, now)
     print("\n" + msg)
     # send_telegram(msg)
 
