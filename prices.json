@@ -1,5 +1,5 @@
 {
-  "last_fetched": "2026-11-22T16:02:46.292831+00:00",
+  "last_fetched": "2026-11-23T00:37:52.630599+00:00",
   "parts": {
     "cpu": {
       "newegg": 484.0,
@@ -9,7 +9,7 @@
       "pricify_store": "Micro Center (in store)",
       "pricify_url": "https://cpu.live/cpus/amd-ryzen-7-9850x3d",
       "fetched_at": {
-        "amazon": "2026-11-22T16:02:46.292831+00:00",
+        "amazon": "2026-11-23T00:37:52.630599+00:00",
         "pricify": "2026-11-16T04:59:59+00:00"
       },
       "lowest_price": 399.99,
@@ -23,7 +23,7 @@
       "microcenter": 1439.99,
       "amazon": 2449.0,
       "fetched_at": {
-        "amazon": "2026-11-22T16:02:46.292831+00:00"
+        "amazon": "2026-11-23T00:37:52.630599+00:00"
       },
       "lowest_price": 2449.0,
       "lowest_at": "amazon",
@@ -36,7 +36,7 @@
       "microcenter": 899.99,
       "amazon": 1244.99,
       "fetched_at": {
-        "amazon": "2026-11-22T16:02:46.292831+00:00"
+        "amazon": "2026-11-23T00:37:52.630599+00:00"
       },
       "lowest_price": 1244.99,
       "lowest_at": "amazon",
@@ -47,7 +47,7 @@
     "ram_32gb": {
       "amazon": 639.99,
       "fetched_at": {
-        "amazon": "2026-11-22T16:02:46.292831+00:00"
+        "amazon": "2026-11-23T00:37:52.630599+00:00"
       },
       "lowest_price": 639.99,
       "lowest_at": "amazon",
@@ -59,7 +59,7 @@
       "newegg": 229.0,
       "amazon": 179.99,
       "fetched_at": {
-        "amazon": "2026-11-22T16:02:46.292831+00:00"
+        "amazon": "2026-11-23T00:37:52.630599+00:00"
       },
       "lowest_price": 179.99,
       "lowest_at": "amazon",
@@ -70,15 +70,15 @@
     "storage": {
       "newegg": 665.0,
       "microcenter": 799.99,
-      "amazon": 899.99,
+      "amazon": 1099.99,
       "fetched_at": {
-        "amazon": "2026-11-22T16:02:46.292831+00:00"
+        "amazon": "2026-11-23T00:37:52.630599+00:00"
       },
-      "lowest_price": 899.99,
+      "lowest_price": 1099.99,
       "lowest_at": "amazon",
       "stale": false,
       "previous_lowest": 899.99,
-      "movement": "flat"
+      "movement": "up"
     },
     "storage_2tb": {
       "amazon": 419.99,
@@ -86,7 +86,7 @@
       "pricify_store": "Micro Center (in store)",
       "pricify_url": "https://ssd.live/ssds/western-digital-wd_black-sn850x-2tb-m2-2280-nvme-pcie-40",
       "fetched_at": {
-        "amazon": "2026-11-22T16:02:46.292831+00:00",
+        "amazon": "2026-11-23T00:37:52.630599+00:00",
         "pricify": "2026-11-16T04:59:59+00:00"
       },
       "lowest_price": 349.99,
@@ -116,7 +116,7 @@
       "pricify_store": "Micro Center (in store)",
       "pricify_url": "https://psu.live/psus/corsair-rme-1000w-80-gold-fully-modular",
       "fetched_at": {
-        "amazon": "2026-11-22T16:02:46.292831+00:00",
+        "amazon": "2026-11-23T00:37:52.630599+00:00",
         "pricify": "2026-11-16T04:59:59+00:00"
       },
       "lowest_price": 121.59,
