@@ -5,7 +5,7 @@
   },
   "build": {
     "name": "Whisper Beast 2026",
-    "description": "Whisper-quiet 1440p gaming, same-box Twitch streaming via RTX 5080 NVENC, and Portal SDK dev build. Target <26 dBA under load. AM5 platform for 5+ year upgrade path. Wired 2.5GbE for low-latency gaming.",
+    "description": "Whisper-quiet 1440p gaming and photo processing. Target <26 dBA under load. AM5 platform for a 5+ year upgrade path. Wired 2.5GbE for low-latency gaming.",
     "budget": 3100,
     "last_updated": "2026-11-21"
   },
@@ -31,16 +31,16 @@
       "id": "gpu",
       "name": "MSI RTX 5080 Ventus 3X OC 16GB",
       "category": "video card",
-      "description": "Primary gaming GPU and same-box stream encoder. 170-220+ FPS at 1440p Ultra with DLSS4/MFG. 9th-gen NVENC handles 1080p60/1440p60 OBS encode with negligible gaming impact. ~24 dBA load with custom fan curve. Street price stabilized ~$1,249 vs $999 MSRP.",
+      "description": "Optional gaming and photo-processing GPU upgrade. 170-220+ FPS at 1440p Ultra with DLSS4/MFG. ~24 dBA load with a custom fan curve. Keep the existing RTX 3080 until 5080 pricing normalizes.",
       "url": "https://www.msi.com/Graphics-Card/GeForce-RTX-5080-16G-VENTUS-3X-OC",
       "target_price": 999,
       "retailers": {
         "newegg": "https://www.newegg.com/msi-rtx-5080-16g-ventus-3x-oc-geforce-rtx-5080-16gb-graphics-card/p/N82E16814137930",
         "microcenter": "https://www.microcenter.com/product/693011/msi-nvidia-geforce-rtx-5080-ventus-3x-overclocked-triple-fan-16gb-gddr7-pcie-50-graphics-card?storeid=085",
-        "amazon": "https://www.amazon.com/dp/B0DSWQNGYF"
+        "amazon": "https://www.amazon.com/dp/B0GMZ4WT7C"
       },
       "in_build": false,
-      "note": "Deferred — using existing RTX 3080 for now. Still tracked; buy when it nears target.",
+      "note": "Deferred — using existing RTX 3080 for now. Still tracked as an optional upgrade; buy when it nears target.",
       "pricify": {
         "site": "rtx.live",
         "part_number": "RTX 5080 16G VENTUS 3X OC"

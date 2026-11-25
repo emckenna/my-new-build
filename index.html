@@ -316,7 +316,8 @@
       const costItems = [];
 
       const inBuild = parts.parts.filter(p => p.in_build !== false);
-      const watching = parts.parts.filter(p => p.in_build === false);
+      const watching = parts.parts.filter(p => p.in_build === false && p.category !== 'video card');
+      const gpuOptions = parts.parts.filter(p => p.in_build === false && p.category === 'video card');
 
       // A retailer price is fresh if it was fetched within 48h of the last run
       const fetchRef = prices?.last_fetched ? Date.parse(prices.last_fetched) : Date.now();
@@ -384,6 +385,19 @@
         if (lowest != null) {
           variableTotal += lowest;
           costItems.push({ name: part.name, cost: lowest });
+        }
+      }
+
+      if (gpuOptions.length > 0) {
+        tbody.insertAdjacentHTML('beforeend',
+          `<tr class="section-row"><td colspan="11" class="section-label">GPU Options — Not in Build Total</td></tr>`);
+        for (const part of gpuOptions) {
+          const lowest = priceMap[part.id]?.lowest_price ?? null;
+          let note = part.note ?? '';
+          if (part.target_price && lowest != null) {
+            note += `${note ? ' · ' : ''}target ${fmt(part.target_price)}`;
+          }
+          partRow(part, note);
         }
       }
 
