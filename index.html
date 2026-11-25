@@ -18,6 +18,10 @@
       <div id="total-sparkline" style="margin-top:0.5rem"></div>
     </div>
     <div class="card">
+      <div class="label">With RTX 5080</div>
+      <div class="value neutral" id="with-gpu">—</div>
+    </div>
+    <div class="card">
       <div class="label">Budget</div>
       <div class="value neutral" id="budget">—</div>
     </div>
@@ -381,6 +385,9 @@
 
       const grandTotal = variableTotal + fixedTotal;
       const vsBudget = build.budget - grandTotal;
+      const gpu = parts.parts.find(part => part.id === 'gpu');
+      const gpuPrice = gpu ? priceMap[gpu.id]?.lowest_price : null;
+      const withGpuTotal = grandTotal + (gpuPrice ?? 0);
       document.getElementById('cost-chart').innerHTML = costBreakdownChart(costItems, grandTotal);
       document.getElementById('cost-legend').innerHTML = grandTotal > 0
         ? costLegend(costItems, grandTotal)
@@ -398,6 +405,8 @@
 
       const totalEl = document.getElementById('total');
       const vsEl = document.getElementById('vs-budget');
+      document.getElementById('with-gpu').textContent =
+        variableTotal > 0 && gpuPrice != null ? fmt(withGpuTotal) : '—';
 
       totalEl.textContent = variableTotal > 0 ? fmt(grandTotal) : 'Prices pending';
       vsEl.textContent = variableTotal > 0 ? (vsBudget >= 0 ? fmt(vsBudget) + ' under' : fmt(Math.abs(vsBudget)) + ' over') : '—';
