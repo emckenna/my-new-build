@@ -1175,6 +1175,7 @@
     },
     {
       "date": "2026-11-25",
+      "microcenter": 399.99,
       "amazon": 444.99,
       "pricify": 399.99,
       "lowest": 399.99
@@ -8011,8 +8012,37 @@
     {
       "date": "2026-11-25",
       "amazon": 419.0,
-      "pricify": 349.99,
-      "lowest": 349.99
+      "lowest": 419.0
+    }
+  ],
+  "gpu_5080_asus_prime_evo": [
+    {
+      "date": "2026-11-25",
+      "microcenter": 2349.99,
+      "pricify": 2349.99,
+      "lowest": 2349.99
+    }
+  ],
+  "gpu_5080_msi_gaming_trio": [
+    {
+      "date": "2026-11-25",
+      "pricify": 2349.99,
+      "lowest": 2349.99
+    }
+  ],
+  "gpu_5080_gigabyte_windforce": [
+    {
+      "date": "2026-11-25",
+      "pricify": 2179.99,
+      "lowest": 2179.99
+    }
+  ],
+  "gpu_5070ti_asus_prime": [
+    {
+      "date": "2026-11-25",
+      "microcenter": 1549.99,
+      "pricify": 1449.99,
+      "lowest": 1449.99
     }
   ]
 }
