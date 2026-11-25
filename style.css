@@ -73,6 +73,8 @@ h1 { font-size: 1.5rem; font-weight: 700; margin-bottom: 0.25rem; }
 .card .value.green { color: #4ade80; }
 .card .value.red { color: #f87171; }
 .card .value.neutral { color: #e2e8f0; }
+.summary-card-link { color: inherit; text-decoration: none; }
+.summary-card-link:hover { border-color: #60a5fa; text-decoration: none; }
 
 .table-scroll {
   overflow-x: auto;
@@ -153,6 +155,44 @@ a:hover { text-decoration: underline; }
 .meta { margin-top: 2rem; font-size: 0.75rem; color: #4a5568; }
 
 #error { color: #f87171; padding: 1rem; }
+.gpu-status {
+  min-height: 1.5rem;
+  margin: 1rem 0;
+  color: #4ade80;
+}
+.gpu-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1rem;
+}
+.gpu-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  background: #1e2330;
+  border: 1px solid #2d3748;
+  border-radius: 0.75rem;
+  padding: 1.25rem;
+}
+.gpu-card.selected { border-color: #4ade80; box-shadow: 0 0 0 1px #4ade80; }
+.gpu-card-header { display: flex; justify-content: space-between; gap: 0.75rem; align-items: flex-start; }
+.gpu-card h2 { font-size: 1rem; }
+.gpu-card p { color: #94a3b8; font-size: 0.85rem; line-height: 1.45; }
+.gpu-price { font-size: 1.75rem; font-weight: 700; color: #e2e8f0; }
+.gpu-meta { color: #64748b; font-size: 0.8rem; }
+.gpu-selected { color: #4ade80; font-size: 0.7rem; white-space: nowrap; }
+.gpu-actions { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.gpu-actions button {
+  border: 1px solid #475569;
+  border-radius: 0.375rem;
+  padding: 0.45rem 0.65rem;
+  color: #e2e8f0;
+  background: #273148;
+  cursor: pointer;
+}
+.gpu-actions button:hover, .gpu-actions button:focus-visible { border-color: #60a5fa; }
+.gpu-actions .persist-btn { background: transparent; }
+.gpu-links { margin-top: auto; font-size: 0.75rem; text-transform: uppercase; }
 .sr-only {
   position: absolute;
   width: 1px;

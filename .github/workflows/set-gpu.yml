@@ -1,0 +1,30 @@
+name: Set global GPU
+
+on:
+  workflow_dispatch:
+    inputs:
+      gpu_id:
+        description: "GPU ID from the GPU Options page"
+        required: true
+        type: string
+
+jobs:
+  set-gpu:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Set selected GPU
+        run: python3 scripts/set_gpu.py "${{ inputs.gpu_id }}"
+
+      - name: Commit selected GPU
+        run: |
+          git config user.name "build-config-bot"
+          git config user.email "bot@noreply"
+          git add parts.json
+          git diff --staged --quiet || git commit -m "chore: select GPU ${{ inputs.gpu_id }}"
+          git pull --rebase -X ours origin main
+          git push

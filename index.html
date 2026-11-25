@@ -18,10 +18,10 @@
       <div class="value neutral" id="total">—</div>
       <div id="total-sparkline" style="margin-top:0.5rem"></div>
     </div>
-    <div class="card">
-      <div class="label">With RTX 5080</div>
+    <a class="card summary-card-link" href="gpu.html">
+      <div class="label" id="gpu-summary-label">GPU Options</div>
       <div class="value neutral" id="with-gpu">—</div>
-    </div>
+    </a>
     <div class="card">
       <div class="label">Budget</div>
       <div class="value neutral" id="budget">—</div>
@@ -332,6 +332,14 @@
       let variableTotal = 0;
       const costItems = [];
 
+      let selectedGpuId = null;
+      try {
+        selectedGpuId = localStorage.getItem('selected_gpu_id');
+      } catch {
+        selectedGpuId = null;
+      }
+      const selectedGpu = parts.parts.find(p => p.id === selectedGpuId && p.category === 'video card');
+      const localPreviewGpu = selectedGpu?.in_build === false ? selectedGpu : null;
       const inBuild = parts.parts.filter(p => p.in_build !== false);
       const watching = parts.parts.filter(p => p.in_build === false && p.category !== 'video card');
       const gpuOptions = parts.parts.filter(p => p.in_build === false && p.category === 'video card');
@@ -405,6 +413,16 @@
         }
       }
 
+      if (localPreviewGpu) {
+        tbody.insertAdjacentHTML('beforeend',
+          `<tr class="section-row"><td colspan="11" class="section-label">Local Preview — GPU Added to Build</td></tr>`);
+        const lowest = partRow(localPreviewGpu, 'Browser-local preview; not saved globally');
+        if (lowest != null) {
+          variableTotal += lowest;
+          costItems.push({ name: localPreviewGpu.name, cost: lowest });
+        }
+      }
+
       if (gpuOptions.length > 0) {
         tbody.insertAdjacentHTML('beforeend',
           `<tr class="section-row"><td colspan="11" class="section-label">GPU Options — Not in Build Total</td></tr>`);
@@ -473,9 +491,12 @@
 
       const grandTotal = variableTotal + fixedTotal;
       const vsBudget = build.budget - grandTotal;
-      const gpu = parts.parts.find(part => part.id === 'gpu');
-      const gpuPrice = gpu ? priceMap[gpu.id]?.lowest_price : null;
-      const withGpuTotal = grandTotal + (gpuPrice ?? 0);
+      const buildGpu = inBuild.find(part => part.category === 'video card');
+      const summaryGpu = buildGpu ?? localPreviewGpu ?? parts.parts.find(part => part.id === 'gpu');
+      const gpuPrice = summaryGpu ? priceMap[summaryGpu.id]?.lowest_price : null;
+      const withGpuTotal = buildGpu || localPreviewGpu
+        ? grandTotal
+        : grandTotal + (gpuPrice ?? 0);
       document.getElementById('cost-chart').innerHTML = costBreakdownChart(costItems, grandTotal);
       document.getElementById('cost-legend').innerHTML = grandTotal > 0
         ? costLegend(costItems, grandTotal)
@@ -493,8 +514,10 @@
 
       const totalEl = document.getElementById('total');
       const vsEl = document.getElementById('vs-budget');
+      document.getElementById('gpu-summary-label').textContent =
+        summaryGpu ? (localPreviewGpu ? `Preview: ${summaryGpu.name}` : `With ${summaryGpu.name}`) : 'GPU Options';
       document.getElementById('with-gpu').textContent =
-        variableTotal > 0 && gpuPrice != null ? fmt(withGpuTotal) : '—';
+        variableTotal > 0 && (gpuPrice != null || buildGpu || localPreviewGpu) ? fmt(withGpuTotal) : '—';
 
       totalEl.textContent = variableTotal > 0 ? fmt(grandTotal) : 'Prices pending';
       vsEl.textContent = variableTotal > 0 ? (vsBudget >= 0 ? fmt(vsBudget) + ' under' : fmt(Math.abs(vsBudget)) + ' over') : '—';

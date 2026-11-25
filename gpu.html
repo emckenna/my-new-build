@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GPU Options — Whisper Beast 2026</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main>
+    <a href="index.html">← Back to build dashboard</a>
+    <h1>GPU Options</h1>
+    <p class="subtitle">Choose a local preview, or persist the selection globally through GitHub Actions.</p>
+    <div id="gpu-status" class="gpu-status" role="status"></div>
+    <section id="gpu-grid" class="gpu-grid" aria-live="polite"></section>
+  </main>
+
+  <script>
+    const fmt = n => n != null
+      ? '$' + Number(n).toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 })
+      : '—';
+    const GPU_WORKFLOW_URL = 'https://github.com/emckenna/my-new-build/actions/workflows/set-gpu.yml';
+
+    async function loadJSON(path) {
+      const response = await fetch(path + '?t=' + Date.now());
+      if (!response.ok) throw new Error(`${path} returned ${response.status}`);
+      return response.json();
+    }
+
+    function selectedId() {
+      try {
+        return localStorage.getItem('selected_gpu_id');
+      } catch {
+        return null;
+      }
+    }
+
+    function setStatus(message) {
+      document.getElementById('gpu-status').textContent = message;
+    }
+
+    function previewGpu(id, name) {
+      try {
+        localStorage.setItem('selected_gpu_id', id);
+        document.querySelectorAll('.gpu-card').forEach(card => {
+          card.classList.toggle('selected', card.dataset.id === id);
+        });
+        setStatus(`${name} selected for this browser. Return to the dashboard to see the local preview.`);
+      } catch {
+        setStatus('This browser blocked local storage, so the preview could not be saved.');
+      }
+    }
+
+    function persistGpu(id, name) {
+      setStatus(`To persist ${name} globally, click Run workflow and enter GPU ID: ${id}`);
+      window.open(GPU_WORKFLOW_URL, '_blank', 'noopener');
+    }
+
+    async function main() {
+      const grid = document.getElementById('gpu-grid');
+      try {
+        const [parts, prices] = await Promise.all([loadJSON('parts.json'), loadJSON('prices.json')]);
+        const gpuParts = parts.parts.filter(part => part.category === 'video card');
+        const priceMap = prices.parts ?? {};
+        const baseTotal = parts.parts
+          .filter(part => part.in_build !== false && part.category !== 'video card')
+          .reduce((sum, part) => sum + (priceMap[part.id]?.lowest_price ?? 0), 0)
+          + parts.extras.reduce((sum, extra) => sum + extra.fixed_price, 0);
+        const currentId = selectedId();
+
+        grid.innerHTML = gpuParts.map(part => {
+          const price = priceMap[part.id]?.lowest_price ?? null;
+          const total = price == null ? null : baseTotal + price;
+          const selected = part.id === currentId;
+          return `
+            <article class="gpu-card${selected ? ' selected' : ''}" data-id="${part.id}">
+              <div class="gpu-card-header">
+                <h2>${part.name}</h2>
+                ${selected ? '<span class="gpu-selected">Preview selected</span>' : ''}
+              </div>
+              <p>${part.description}</p>
+              <div class="gpu-price">${fmt(price)}</div>
+              <div class="gpu-meta">${total != null ? `Build total: ${fmt(total)}` : 'Price pending first fetch'}</div>
+              <div class="gpu-actions">
+                <button type="button" class="preview-btn">Preview in build</button>
+                <button type="button" class="persist-btn">Persist globally</button>
+              </div>
+              <div class="gpu-links">
+                ${Object.entries(part.retailers ?? {}).filter(([, url]) => url)
+                  .map(([retailer, url]) => `<a href="${url}" target="_blank" rel="noopener">${retailer}</a>`).join(' · ')}
+              </div>
+            </article>
+          `;
+        }).join('');
+
+        gpuParts.forEach(part => {
+          const card = grid.querySelector(`[data-id="${part.id}"]`);
+          card.querySelector('.preview-btn').addEventListener('click', () => previewGpu(part.id, part.name));
+          card.querySelector('.persist-btn').addEventListener('click', () => persistGpu(part.id, part.name));
+        });
+      } catch (error) {
+        setStatus('Error loading GPU data: ' + error.message);
+      }
+    }
+
+    main();
+  </script>
+</body>
+</html>
