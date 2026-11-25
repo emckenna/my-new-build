@@ -90,6 +90,8 @@ th {
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
+.sortable { cursor: pointer; }
+.sortable:hover { color: #e2e8f0; }
 td { padding: 0.75rem; border-bottom: 1px solid #1a2030; }
 tr:last-child td { border-bottom: none; }
 tr:hover td { background: #1a2030; }
