@@ -47,6 +47,85 @@
       }
     },
     {
+      "id": "gpu_5080_asus_prime_evo",
+      "name": "ASUS RTX 5080 Prime EVO OC 16GB",
+      "category": "video card",
+      "description": "Lower-cost RTX 5080 alternative with a compact triple-fan cooler. Same 16GB GDDR7 class as the Ventus, for gaming, streaming, clipping, and photo processing.",
+      "url": "https://www.asus.com/us/motherboards-components/graphics-cards/prime/prime-rtx5080-o16g-evo/",
+      "target_price": 999,
+      "retailers": {
+        "newegg": "https://www.newegg.com/asus-prime-rtx5080-o16g-evo-geforce-rtx-5080-16gb-video-card-triple-fans/p/9SIAYB7MAJ2055",
+        "microcenter": "https://www.microcenter.com/product/711641/asus-nvidia-geforce-rtx-5080-prime-evo-oc-triple-fan-graphics-card",
+        "amazon": "https://www.amazon.com/dp/B0GZR4P62R"
+      },
+      "in_build": false,
+      "alternative_to": "gpu",
+      "note": "RTX 5080 alternative; not in build total.",
+      "pricify": {
+        "site": "rtx.live",
+        "part_number": "PRIME-RTX5080-O16G-EVO"
+      }
+    },
+    {
+      "id": "gpu_5080_msi_gaming_trio",
+      "name": "MSI RTX 5080 Gaming Trio OC 16GB",
+      "category": "video card",
+      "description": "Large triple-fan RTX 5080 alternative for gaming, streaming, clipping, and photo processing.",
+      "url": "https://www.msi.com/Graphics-Card/GeForce-RTX-5080-16G-GAMING-TRIO-OC",
+      "target_price": 999,
+      "retailers": {
+        "newegg": null,
+        "microcenter": "https://www.microcenter.com/product/690264/msi-nvidia-geforce-rtx-5080-gaming-trio-overclocked-triple-fan-16gb-gddr7-pcie-50-graphics-card",
+        "amazon": "https://www.amazon.com/dp/B0DSXNXTSS"
+      },
+      "in_build": false,
+      "alternative_to": "gpu",
+      "note": "RTX 5080 alternative; not in build total.",
+      "pricify": {
+        "site": "rtx.live",
+        "part_number": "RTX 5080 16G GAMING TRIO OC"
+      }
+    },
+    {
+      "id": "gpu_5080_gigabyte_windforce",
+      "name": "Gigabyte RTX 5080 Windforce SFF OC 16GB",
+      "category": "video card",
+      "description": "More compact triple-fan RTX 5080 alternative for gaming, streaming, clipping, and photo processing.",
+      "url": "https://www.gigabyte.com/Graphics-Card/GV-N5080WF3OC-16GD",
+      "target_price": 999,
+      "retailers": {
+        "newegg": "https://www.newegg.com/gigabyte-windforce-gv-n5080wf3oc-16gd-geforce-rtx-5080-16gb-graphics-card-triple-fans/p/N82E16814932754",
+        "microcenter": "https://www.microcenter.com/product/690477/gigabyte-nvidia-geforce-rtx-5080-windforce-sff-overclocked-triple-fan-16gb-gddr7-pcie-50-graphics-card",
+        "amazon": "https://www.amazon.com/dp/B0DS2R7N4F"
+      },
+      "in_build": false,
+      "alternative_to": "gpu",
+      "note": "RTX 5080 alternative; not in build total.",
+      "pricify": {
+        "site": "rtx.live",
+        "part_number": "GV-N5080WF3OC-16GD"
+      }
+    },
+    {
+      "id": "gpu_5070ti_asus_prime",
+      "name": "ASUS RTX 5070 Ti Prime OC 16GB",
+      "category": "video card",
+      "description": "Lower-cost 16GB option for 1440p gaming, streaming, clipping, and photo processing.",
+      "url": "https://www.asus.com/us/motherboards-components/graphics-cards/prime/prime-rtx5070ti-o16g/",
+      "target_price": 749,
+      "retailers": {
+        "newegg": "https://www.newegg.com/asus-prime-rtx5070ti-16g-geforce-rtx-5070-ti-16gb-video-cards-triple-fans/p/9SIBP4YKUH9777",
+        "microcenter": "https://www.microcenter.com/product/690048/asus-nvidia-geforce-rtx-5070-ti-prime-overclocked-triple-fan-16gb-gddr7-pcie-50-graphics-card",
+        "amazon": "https://www.amazon.com/dp/B0DS6V7L5M"
+      },
+      "in_build": false,
+      "note": "Lower-cost alternative; not in build total.",
+      "pricify": {
+        "site": "rtx.live",
+        "part_number": "PRIME-RTX5070TI-O16G"
+      }
+    },
+    {
       "id": "ram",
       "name": "G.Skill Flare X5 64GB DDR5-6000 CL30",
       "category": "memory",
