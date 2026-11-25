@@ -13,7 +13,22 @@
     <h1>GPU Options</h1>
     <p class="subtitle">Choose a local preview, or persist the selection globally through GitHub Actions.</p>
     <div id="gpu-status" class="gpu-status" role="status"></div>
-    <section id="gpu-grid" class="gpu-grid" aria-live="polite"></section>
+    <div class="gpu-table-scroll">
+      <table class="gpu-table">
+        <caption class="sr-only">Tracked GPU options</caption>
+        <thead>
+          <tr>
+            <th scope="col">GPU</th>
+            <th scope="col">Price</th>
+            <th scope="col">Build total</th>
+            <th scope="col">GPU ID</th>
+            <th scope="col">Retailers</th>
+            <th scope="col">Actions</th>
+          </tr>
+        </thead>
+        <tbody id="gpu-table-body"></tbody>
+      </table>
+    </div>
   </main>
 
   <script>
@@ -43,8 +58,8 @@
     function previewGpu(id, name) {
       try {
         localStorage.setItem('selected_gpu_id', id);
-        document.querySelectorAll('.gpu-card').forEach(card => {
-          card.classList.toggle('selected', card.dataset.id === id);
+        document.querySelectorAll('.gpu-row').forEach(row => {
+          row.classList.toggle('selected', row.dataset.id === id);
         });
         setStatus(`${name} selected for this browser. Return to the dashboard to see the local preview.`);
       } catch {
@@ -62,13 +77,14 @@
     }
 
     function persistGpu(id, name) {
+      const copyPromise = navigator.clipboard?.writeText(id);
+      copyPromise?.catch(() => {});
       window.open(GPU_WORKFLOW_URL, '_blank', 'noopener');
-      navigator.clipboard.writeText(id).catch(() => {});
       setStatus(`GPU ID copied. In Actions, click Run workflow and paste: ${id}`);
     }
 
     async function main() {
-      const grid = document.getElementById('gpu-grid');
+      const tableBody = document.getElementById('gpu-table-body');
       try {
         const [parts, prices] = await Promise.all([loadJSON('parts.json'), loadJSON('prices.json')]);
         const gpuParts = parts.parts.filter(part => part.category === 'video card');
@@ -79,37 +95,39 @@
           + parts.extras.reduce((sum, extra) => sum + extra.fixed_price, 0);
         const currentId = selectedId();
 
-        grid.innerHTML = gpuParts.map(part => {
+        tableBody.innerHTML = gpuParts.map(part => {
           const price = priceMap[part.id]?.lowest_price ?? null;
           const total = price == null ? null : baseTotal + price;
           const selected = part.id === currentId;
           return `
-            <article class="gpu-card${selected ? ' selected' : ''}" data-id="${part.id}">
-              <div class="gpu-card-header">
-                <h2>${part.name}</h2>
+            <tr class="gpu-row${selected ? ' selected' : ''}" data-id="${part.id}">
+              <th scope="row">
+                <strong>${part.name}</strong>
+                <span class="gpu-description">${part.description}</span>
                 ${selected ? '<span class="gpu-selected">Preview selected</span>' : ''}
-              </div>
-              <p>${part.description}</p>
-              <div class="gpu-price">${fmt(price)}</div>
-              <div class="gpu-meta">${total != null ? `Build total: ${fmt(total)}` : 'Price pending first fetch'}</div>
-              <div class="gpu-id">GPU ID: <code>${part.id}</code> <button type="button" class="copy-id">Copy ID</button></div>
-              <div class="gpu-actions">
-                <button type="button" class="preview-btn">Preview in build</button>
-                <button type="button" class="persist-btn">Persist globally</button>
-              </div>
-              <div class="gpu-links">
+              </th>
+              <td class="gpu-price">${fmt(price)}</td>
+              <td class="gpu-meta">${total != null ? fmt(total) : 'Pending'}</td>
+              <td class="gpu-id"><code>${part.id}</code> <button type="button" class="copy-id">Copy</button></td>
+              <td class="gpu-links">
                 ${Object.entries(part.retailers ?? {}).filter(([, url]) => url)
                   .map(([retailer, url]) => `<a href="${url}" target="_blank" rel="noopener">${retailer}</a>`).join(' · ')}
-              </div>
-            </article>
+              </td>
+              <td>
+                <div class="gpu-actions">
+                  <button type="button" class="preview-btn">Preview</button>
+                  <button type="button" class="persist-btn">Persist</button>
+                </div>
+              </td>
+            </tr>
           `;
         }).join('');
 
         gpuParts.forEach(part => {
-          const card = grid.querySelector(`[data-id="${part.id}"]`);
-          card.querySelector('.copy-id').addEventListener('click', event => copyGpuId(part.id, event.currentTarget));
-          card.querySelector('.preview-btn').addEventListener('click', () => previewGpu(part.id, part.name));
-          card.querySelector('.persist-btn').addEventListener('click', () => persistGpu(part.id, part.name));
+          const row = tableBody.querySelector(`[data-id="${part.id}"]`);
+          row.querySelector('.copy-id').addEventListener('click', event => copyGpuId(part.id, event.currentTarget));
+          row.querySelector('.preview-btn').addEventListener('click', () => previewGpu(part.id, part.name));
+          row.querySelector('.persist-btn').addEventListener('click', () => persistGpu(part.id, part.name));
         });
       } catch (error) {
         setStatus('Error loading GPU data: ' + error.message);
