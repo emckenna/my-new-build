@@ -8,10 +8,11 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <h1 id="build-name">Loading...</h1>
-  <div class="subtitle" id="build-desc"></div>
+  <main>
+    <h1 id="build-name">Loading...</h1>
+    <div class="subtitle" id="build-desc"></div>
 
-  <div class="summary">
+    <div class="summary">
     <div class="card">
       <div class="label">Build Total</div>
       <div class="value neutral" id="total">—</div>
@@ -33,39 +34,43 @@
       <div class="label">Last Updated</div>
       <div class="value neutral" style="font-size:1rem;padding-top:0.4rem" id="last-updated">—</div>
     </div>
-  </div>
+    </div>
 
-  <section class="breakdown" aria-labelledby="breakdown-title">
+    <section class="breakdown" aria-labelledby="breakdown-title">
     <div>
       <h2 id="breakdown-title">Cost Breakdown</h2>
       <p class="breakdown-subtitle">Current lowest prices and fixed-price components</p>
       <div id="cost-chart" aria-live="polite"></div>
     </div>
     <ul class="chart-legend" id="cost-legend"></ul>
-  </section>
+    </section>
 
-  <div id="error"></div>
+    <div id="error" role="alert"></div>
 
-  <table id="parts-table">
-    <thead>
-      <tr>
-        <th class="sortable" data-sort-key="part" aria-sort="none" title="Click to sort">Part</th>
-        <th class="sortable" data-sort-key="category" aria-sort="none" title="Click to sort">Category</th>
-        <th>NE</th>
-        <th>MC</th>
-        <th>AMZ</th>
-        <th title="Pricify weekly open data — lowest store price (pricify.ai)">PFY</th>
-        <th class="sortable" data-sort-key="avg" aria-sort="none" title="Click to sort">Avg</th>
-        <th>Lowest</th>
-        <th>Movement</th>
-        <th>Trend</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody id="parts-body"></tbody>
-  </table>
+    <div class="table-scroll">
+      <table id="parts-table">
+        <caption class="sr-only">Tracked build parts, retailer prices, averages, and price movement</caption>
+        <thead>
+          <tr>
+            <th scope="col" class="sortable" data-sort-key="part" aria-sort="none" tabindex="0" role="button" aria-label="Sort by part" title="Click to sort">Part</th>
+            <th scope="col" class="sortable" data-sort-key="category" aria-sort="none" tabindex="0" role="button" aria-label="Sort by category" title="Click to sort">Category</th>
+            <th scope="col">NE</th>
+            <th scope="col">MC</th>
+            <th scope="col">AMZ</th>
+            <th scope="col" title="Pricify weekly open data — lowest store price (pricify.ai)">PFY</th>
+            <th scope="col" class="sortable" data-sort-key="avg" aria-sort="none" tabindex="0" role="button" aria-label="Sort by average price" title="Click to sort">Avg</th>
+            <th scope="col">Lowest</th>
+            <th scope="col">Movement</th>
+            <th scope="col">Trend</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody id="parts-body"></tbody>
+      </table>
+    </div>
 
-  <div class="meta" id="meta"></div>
+    <div class="meta" id="meta"></div>
+  </main>
 
   <script>
     const fmt = (n) => n != null ? '$' + Number(n).toLocaleString('en-US', {minimumFractionDigits: 0, maximumFractionDigits: 0}) : '—';
@@ -86,11 +91,23 @@
     }
 
     function copyBtn(name) {
-      return `<button class="copy-btn" onclick="copyText('${name.replace(/'/g, "\\'")}')" title="Copy name">⎘</button>`;
+      const escaped = name.replace(/'/g, "\\'");
+      return `<button class="copy-btn" onclick="copyText('${escaped}', this)" aria-label="Copy ${name}" title="Copy name">⎘</button>`;
     }
 
-    function copyText(text) {
-      navigator.clipboard.writeText(text);
+    async function copyText(text, button) {
+      try {
+        await navigator.clipboard.writeText(text);
+        button.textContent = '✓';
+        button.setAttribute('aria-label', 'Copied');
+        setTimeout(() => {
+          button.textContent = '⎘';
+          button.setAttribute('aria-label', `Copy ${text}`);
+        }, 1200);
+      } catch {
+        button.textContent = '!';
+        button.setAttribute('aria-label', 'Copy failed');
+      }
     }
 
     function sparkline(history) {
@@ -497,7 +514,16 @@
     }
 
     document.querySelectorAll('#parts-table th[data-sort-key]')
-      .forEach(header => header.addEventListener('click', () => sortTable(header.dataset.sortKey)));
+      .forEach(header => {
+        const sort = () => sortTable(header.dataset.sortKey);
+        header.addEventListener('click', sort);
+        header.addEventListener('keydown', event => {
+          if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault();
+            sort();
+          }
+        });
+      });
 
     main();
   </script>

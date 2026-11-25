@@ -12,9 +12,9 @@ h1 { font-size: 1.5rem; font-weight: 700; margin-bottom: 0.25rem; }
 .subtitle { color: #64748b; font-size: 0.875rem; margin-bottom: 2rem; }
 
 .summary {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
   gap: 1.5rem;
-  flex-wrap: wrap;
   margin-bottom: 2rem;
 }
 
@@ -67,7 +67,6 @@ h1 { font-size: 1.5rem; font-weight: 700; margin-bottom: 0.25rem; }
   border: 1px solid #2d3748;
   border-radius: 0.75rem;
   padding: 1rem 1.5rem;
-  min-width: 160px;
 }
 .card .label { font-size: 0.75rem; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em; }
 .card .value { font-size: 1.75rem; font-weight: 700; margin-top: 0.25rem; }
@@ -75,8 +74,14 @@ h1 { font-size: 1.5rem; font-weight: 700; margin-bottom: 0.25rem; }
 .card .value.red { color: #f87171; }
 .card .value.neutral { color: #e2e8f0; }
 
+.table-scroll {
+  overflow-x: auto;
+  border: 1px solid #1e2330;
+  border-radius: 0.5rem;
+}
 table {
   width: 100%;
+  min-width: 920px;
   border-collapse: collapse;
   font-size: 0.9rem;
 }
@@ -95,6 +100,10 @@ th {
 .sortable[aria-sort="ascending"]::after { content: '↑'; color: #e2e8f0; }
 .sortable[aria-sort="descending"]::after { content: '↓'; color: #e2e8f0; }
 .sortable:hover { color: #e2e8f0; }
+.sortable:focus-visible {
+  outline: 2px solid #60a5fa;
+  outline-offset: -2px;
+}
 td { padding: 0.75rem; border-bottom: 1px solid #1a2030; }
 tr:last-child td { border-bottom: none; }
 tr:hover td { background: #1a2030; }
@@ -136,14 +145,37 @@ a:hover { text-decoration: underline; }
   vertical-align: middle;
 }
 .copy-btn:hover { color: #94a3b8; }
+.copy-btn:focus-visible {
+  outline: 2px solid #60a5fa;
+  outline-offset: 2px;
+}
 
 .meta { margin-top: 2rem; font-size: 0.75rem; color: #4a5568; }
 
 #error { color: #f87171; padding: 1rem; }
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
 
 td:has(svg) { padding-top: 0.5rem; padding-bottom: 0.5rem; }
 
 @media (max-width: 720px) {
+  body { padding: 1rem 0.75rem; }
+  .summary { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.75rem; }
+  .card { padding: 0.85rem 1rem; }
+  .card .value { font-size: 1.4rem; }
   .breakdown { align-items: flex-start; flex-direction: column; }
   .chart-legend { grid-template-columns: 1fr; width: 100%; }
+}
+
+@media (max-width: 380px) {
+  .summary { grid-template-columns: 1fr; }
 }
