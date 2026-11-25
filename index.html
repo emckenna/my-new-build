@@ -262,11 +262,13 @@
       };
 
       const groups = [];
+      let sectionLabel = null;
       let group = [];
       let summaryRow = null;
       for (const row of [...tbody.children]) {
         if (row.classList.contains('section-row')) {
-          groups.push({ label: row, rows: group.sort(compare) });
+          if (sectionLabel) groups.push({ label: sectionLabel, rows: group.sort(compare) });
+          sectionLabel = row;
           group = [];
         } else if (row.classList.contains('summary-row')) {
           summaryRow = row;
@@ -274,10 +276,10 @@
           group.push(row);
         }
       }
-      groups.push({ label: null, rows: group.sort(compare) });
+      if (sectionLabel) groups.push({ label: sectionLabel, rows: group.sort(compare) });
 
       for (const section of groups) {
-        if (section.label) tbody.appendChild(section.label);
+        tbody.appendChild(section.label);
         section.rows.forEach(row => tbody.appendChild(row));
       }
       if (summaryRow) tbody.appendChild(summaryRow);

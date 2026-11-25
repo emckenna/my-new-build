@@ -91,6 +91,9 @@ th {
   letter-spacing: 0.05em;
 }
 .sortable { cursor: pointer; }
+.sortable::after { content: '↕'; color: #64748b; margin-left: 0.35rem; }
+.sortable[aria-sort="ascending"]::after { content: '↑'; color: #e2e8f0; }
+.sortable[aria-sort="descending"]::after { content: '↓'; color: #e2e8f0; }
 .sortable:hover { color: #e2e8f0; }
 td { padding: 0.75rem; border-bottom: 1px solid #1a2030; }
 tr:last-child td { border-bottom: none; }
