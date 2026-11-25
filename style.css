@@ -180,6 +180,17 @@ a:hover { text-decoration: underline; }
 .gpu-card p { color: #94a3b8; font-size: 0.85rem; line-height: 1.45; }
 .gpu-price { font-size: 1.75rem; font-weight: 700; color: #e2e8f0; }
 .gpu-meta { color: #64748b; font-size: 0.8rem; }
+.gpu-id { color: #64748b; font-size: 0.75rem; }
+.gpu-id code { color: #cbd5e1; }
+.copy-id {
+  border: 0;
+  padding: 0;
+  color: #60a5fa;
+  background: transparent;
+  cursor: pointer;
+  font-size: 0.75rem;
+}
+.copy-id:hover, .copy-id:focus-visible { text-decoration: underline; }
 .gpu-selected { color: #4ade80; font-size: 0.7rem; white-space: nowrap; }
 .gpu-actions { display: flex; flex-wrap: wrap; gap: 0.5rem; }
 .gpu-actions button {

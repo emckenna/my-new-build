@@ -52,9 +52,19 @@
       }
     }
 
+    function copyGpuId(id, button) {
+      navigator.clipboard.writeText(id).then(() => {
+        button.textContent = 'Copied';
+        setTimeout(() => { button.textContent = 'Copy ID'; }, 1200);
+      }).catch(() => {
+        setStatus(`Copy failed. GPU ID: ${id}`);
+      });
+    }
+
     function persistGpu(id, name) {
-      setStatus(`To persist ${name} globally, click Run workflow and enter GPU ID: ${id}`);
       window.open(GPU_WORKFLOW_URL, '_blank', 'noopener');
+      navigator.clipboard.writeText(id).catch(() => {});
+      setStatus(`GPU ID copied. In Actions, click Run workflow and paste: ${id}`);
     }
 
     async function main() {
@@ -82,6 +92,7 @@
               <p>${part.description}</p>
               <div class="gpu-price">${fmt(price)}</div>
               <div class="gpu-meta">${total != null ? `Build total: ${fmt(total)}` : 'Price pending first fetch'}</div>
+              <div class="gpu-id">GPU ID: <code>${part.id}</code> <button type="button" class="copy-id">Copy ID</button></div>
               <div class="gpu-actions">
                 <button type="button" class="preview-btn">Preview in build</button>
                 <button type="button" class="persist-btn">Persist globally</button>
@@ -96,6 +107,7 @@
 
         gpuParts.forEach(part => {
           const card = grid.querySelector(`[data-id="${part.id}"]`);
+          card.querySelector('.copy-id').addEventListener('click', event => copyGpuId(part.id, event.currentTarget));
           card.querySelector('.preview-btn').addEventListener('click', () => previewGpu(part.id, part.name));
           card.querySelector('.persist-btn').addEventListener('click', () => persistGpu(part.id, part.name));
         });
