@@ -40,7 +40,7 @@
         "amazon": "https://www.amazon.com/dp/B0GMZ4WT7C"
       },
       "in_build": false,
-      "note": "Deferred — using existing RTX 3080 for now. Still tracked as an optional upgrade; buy when it nears target.",
+      "note": "Deferred \u2014 using existing RTX 3080 for now. Still tracked as an optional upgrade; buy when it nears target.",
       "pricify": {
         "site": "rtx.live",
         "part_number": "RTX 5080 16G VENTUS 3X OC"
@@ -118,7 +118,7 @@
         "microcenter": "https://www.microcenter.com/product/690048/asus-nvidia-geforce-rtx-5070-ti-prime-overclocked-triple-fan-16gb-gddr7-pcie-50-graphics-card",
         "amazon": "https://www.amazon.com/dp/B0DS6V7L5M"
       },
-      "in_build": false,
+      "in_build": true,
       "note": "Lower-cost alternative; not in build total.",
       "pricify": {
         "site": "rtx.live",
@@ -129,7 +129,7 @@
       "id": "ram",
       "name": "G.Skill Flare X5 64GB DDR5-6000 CL30",
       "category": "memory",
-      "description": "64GB AMD EXPO-tuned DDR5-6000 for AM5. CL30 timings — tighter than CL40. DDR5-6000 is the Zen5 sweet spot; speed above this gives <1% gain.",
+      "description": "64GB AMD EXPO-tuned DDR5-6000 for AM5. CL30 timings \u2014 tighter than CL40. DDR5-6000 is the Zen5 sweet spot; speed above this gives <1% gain.",
       "url": "https://www.gskill.com/product/165/396/1691400033/F5-6000J3040G32GX2-FX5",
       "target_price": 196,
       "retailers": {
@@ -165,7 +165,7 @@
       "id": "motherboard",
       "name": "ASRock X870 LiveMixer WiFi",
       "category": "motherboard",
-      "description": "X870 chipset, PCIe 5.0. 25 USB ports (14 rear including USB4). Onboard 2.5GbE wired Ethernet — mandatory for low-latency Arc Raiders. WiFi as fallback only.",
+      "description": "X870 chipset, PCIe 5.0. 25 USB ports (14 rear including USB4). Onboard 2.5GbE wired Ethernet \u2014 mandatory for low-latency Arc Raiders. WiFi as fallback only.",
       "url": "https://www.asrock.com/mb/AMD/X870%20LiveMixer%20WiFi/index.asp",
       "target_price": 230,
       "retailers": {
@@ -235,7 +235,7 @@
       "id": "psu",
       "name": "Corsair RM1000e 1000W 80+ Gold",
       "category": "power supply",
-      "description": "Zero-RPM fan mode below 40% load — completely silent at idle/light gaming. Headroom for future GPU upgrades.",
+      "description": "Zero-RPM fan mode below 40% load \u2014 completely silent at idle/light gaming. Headroom for future GPU upgrades.",
       "url": "https://www.corsair.com/us/en/p/psu/cp-9020297-na/rme-series-rm1000e-fully-modular-low-noise-atx-power-supply-cp-9020297-na",
       "target_price": 150,
       "retailers": {
@@ -265,7 +265,7 @@
       "id": "fans",
       "name": "Noctua NF-A12x25 PWM 3-Pack",
       "category": "fans",
-      "description": "Sub-20 dBA case airflow. Replaces stock fans for ultimate quiet operation. MC sells individually — link is per-unit.",
+      "description": "Sub-20 dBA case airflow. Replaces stock fans for ultimate quiet operation. MC sells individually \u2014 link is per-unit.",
       "url": "https://www.noctua.at/en/products/nf-a12x25-pwm",
       "fixed_price": 80,
       "retailers": {
@@ -277,7 +277,7 @@
       "id": "os",
       "name": "Windows 11 Pro (reuse Win10 Pro key)",
       "category": "os",
-      "description": "Moving the Windows 10 Pro license from TYRANT1 — activates Windows 11 Pro. Only works if it is a retail key (OEM keys are tied to the old board); otherwise this is ~$140. Required for DX12 Ultimate and Arc Raiders optimization.",
+      "description": "Moving the Windows 10 Pro license from TYRANT1 \u2014 activates Windows 11 Pro. Only works if it is a retail key (OEM keys are tied to the old board); otherwise this is ~$140. Required for DX12 Ultimate and Arc Raiders optimization.",
       "url": "https://www.microsoft.com/en-us/windows/windows-11",
       "fixed_price": 0
     }
