@@ -1179,6 +1179,13 @@
       "amazon": 444.99,
       "pricify": 399.99,
       "lowest": 399.99
+    },
+    {
+      "date": "2026-11-26",
+      "microcenter": 399.99,
+      "amazon": 429.0,
+      "pricify": 399.99,
+      "lowest": 399.99
     }
   ],
   "gpu": [
@@ -2353,6 +2360,11 @@
       "date": "2026-11-25",
       "amazon": 2449.0,
       "lowest": 2449.0
+    },
+    {
+      "date": "2026-11-26",
+      "amazon": 2449.0,
+      "lowest": 2449.0
     }
   ],
   "ram": [
@@ -3505,6 +3517,11 @@
       "date": "2026-11-25",
       "amazon": 1284.77,
       "lowest": 1284.77
+    },
+    {
+      "date": "2026-11-26",
+      "amazon": 1284.77,
+      "lowest": 1284.77
     }
   ],
   "motherboard": [
@@ -4470,6 +4487,11 @@
     },
     {
       "date": "2026-11-25",
+      "amazon": 179.99,
+      "lowest": 179.99
+    },
+    {
+      "date": "2026-11-26",
       "amazon": 179.99,
       "lowest": 179.99
     }
@@ -5619,6 +5641,12 @@
       "date": "2026-11-25",
       "microcenter": 649.99,
       "amazon": 1099.99,
+      "lowest": 649.99
+    },
+    {
+      "date": "2026-11-26",
+      "microcenter": 649.99,
+      "amazon": 962.74,
       "lowest": 649.99
     }
   ],
@@ -6804,6 +6832,11 @@
       "date": "2026-11-25",
       "microcenter": 194.99,
       "lowest": 194.99
+    },
+    {
+      "date": "2026-11-26",
+      "microcenter": 194.99,
+      "lowest": 194.99
     }
   ],
   "psu": [
@@ -7955,6 +7988,13 @@
       "amazon": 121.59,
       "pricify": 121.59,
       "lowest": 121.59
+    },
+    {
+      "date": "2026-11-26",
+      "microcenter": 121.59,
+      "amazon": 121.59,
+      "pricify": 121.59,
+      "lowest": 121.59
     }
   ],
   "ram_32gb": [
@@ -7980,6 +8020,11 @@
     },
     {
       "date": "2026-11-25",
+      "amazon": 639.99,
+      "lowest": 639.99
+    },
+    {
+      "date": "2026-11-26",
       "amazon": 639.99,
       "lowest": 639.99
     }
@@ -8013,11 +8058,22 @@
       "date": "2026-11-25",
       "amazon": 419.0,
       "lowest": 419.0
+    },
+    {
+      "date": "2026-11-26",
+      "amazon": 419.0,
+      "lowest": 419.0
     }
   ],
   "gpu_5080_asus_prime_evo": [
     {
       "date": "2026-11-25",
+      "microcenter": 2349.99,
+      "pricify": 2349.99,
+      "lowest": 2349.99
+    },
+    {
+      "date": "2026-11-26",
       "microcenter": 2349.99,
       "pricify": 2349.99,
       "lowest": 2349.99
@@ -8029,6 +8085,12 @@
       "microcenter": 2349.99,
       "pricify": 2349.99,
       "lowest": 2349.99
+    },
+    {
+      "date": "2026-11-26",
+      "microcenter": 2349.99,
+      "pricify": 2349.99,
+      "lowest": 2349.99
     }
   ],
   "gpu_5080_gigabyte_windforce": [
@@ -8036,11 +8098,23 @@
       "date": "2026-11-25",
       "pricify": 2179.99,
       "lowest": 2179.99
+    },
+    {
+      "date": "2026-11-26",
+      "microcenter": 2179.99,
+      "pricify": 2179.99,
+      "lowest": 2179.99
     }
   ],
   "gpu_5070ti_asus_prime": [
     {
       "date": "2026-11-25",
+      "microcenter": 1549.99,
+      "pricify": 1449.99,
+      "lowest": 1449.99
+    },
+    {
+      "date": "2026-11-26",
       "microcenter": 1549.99,
       "pricify": 1449.99,
       "lowest": 1449.99
