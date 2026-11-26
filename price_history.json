@@ -8061,8 +8061,9 @@
     },
     {
       "date": "2026-11-26",
+      "microcenter": 349.99,
       "amazon": 419.0,
-      "lowest": 419.0
+      "lowest": 349.99
     }
   ],
   "gpu_5080_asus_prime_evo": [
