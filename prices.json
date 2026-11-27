@@ -1,16 +1,16 @@
 {
-  "last_fetched": "2026-11-27T13:36:01.047201+00:00",
+  "last_fetched": "2026-11-27T23:56:46.886066+00:00",
   "parts": {
     "cpu": {
       "newegg": 484.0,
       "microcenter": 399.99,
-      "amazon": 444.99,
+      "amazon": 442.99,
       "pricify": 399.99,
       "pricify_store": "Micro Center (in store)",
       "pricify_url": "https://cpu.live/cpus/amd-ryzen-7-9850x3d",
       "fetched_at": {
         "microcenter": "2026-11-27T00:24:53.927355+00:00",
-        "amazon": "2026-11-27T13:36:01.047201+00:00",
+        "amazon": "2026-11-27T23:56:46.886066+00:00",
         "pricify": "2026-11-23T04:59:59+00:00"
       },
       "lowest_price": 399.99,
@@ -29,8 +29,8 @@
       "lowest_price": 1439.99,
       "lowest_at": "microcenter",
       "stale": true,
-      "previous_lowest": 2449.0,
-      "movement": "down"
+      "previous_lowest": 1439.99,
+      "movement": "flat"
     },
     "gpu_5080_asus_prime_evo": {
       "microcenter": 2349.99,
@@ -38,7 +38,7 @@
       "pricify_store": "Micro Center (in store)",
       "pricify_url": "https://rtx.live/cards/asus-geforce-rtx-5080-prime-evo-oc-triple-fan",
       "fetched_at": {
-        "microcenter": "2026-11-26T00:03:12.237349+00:00",
+        "microcenter": "2026-11-27T23:56:46.886066+00:00",
         "pricify": "2026-11-23T04:59:59+00:00"
       },
       "lowest_price": 2349.99,
@@ -53,7 +53,7 @@
       "pricify_store": "Micro Center (in store)",
       "pricify_url": "https://rtx.live/cards/msi-geforce-rtx-5080-gaming-trio-overclocked-triple-fan-16gb-gddr7",
       "fetched_at": {
-        "microcenter": "2026-11-27T13:36:01.047201+00:00",
+        "microcenter": "2026-11-27T23:56:46.886066+00:00",
         "pricify": "2026-11-23T04:59:59+00:00"
       },
       "lowest_price": 2349.99,
@@ -68,7 +68,7 @@
       "pricify_store": "Micro Center (in store)",
       "pricify_url": "https://rtx.live/cards/gigabyte-geforce-rtx-5080-windforce-sff-overclocked-triple-fan-16gb-gddr7",
       "fetched_at": {
-        "microcenter": "2026-11-27T00:24:53.927355+00:00",
+        "microcenter": "2026-11-27T23:56:46.886066+00:00",
         "pricify": "2026-11-23T04:59:59+00:00"
       },
       "lowest_price": 2179.99,
@@ -83,7 +83,7 @@
       "pricify_store": "Central Computers (in store)",
       "pricify_url": "https://rtx.live/cards/asus-geforce-rtx-5070-ti-prime-overclocked-triple-fan-16gb-gddr7",
       "fetched_at": {
-        "microcenter": "2026-11-27T13:36:01.047201+00:00",
+        "microcenter": "2026-11-27T23:56:46.886066+00:00",
         "pricify": "2026-11-23T04:59:59+00:00"
       },
       "lowest_price": 1449.99,
@@ -97,7 +97,7 @@
       "microcenter": 899.99,
       "amazon": 1284.77,
       "fetched_at": {
-        "amazon": "2026-11-27T13:36:01.047201+00:00"
+        "amazon": "2026-11-27T23:56:46.886066+00:00"
       },
       "lowest_price": 1284.77,
       "lowest_at": "amazon",
@@ -108,7 +108,7 @@
     "ram_32gb": {
       "amazon": 639.99,
       "fetched_at": {
-        "amazon": "2026-11-27T13:36:01.047201+00:00"
+        "amazon": "2026-11-27T23:56:46.886066+00:00"
       },
       "lowest_price": 639.99,
       "lowest_at": "amazon",
@@ -120,7 +120,7 @@
       "newegg": 229.0,
       "amazon": 179.99,
       "fetched_at": {
-        "amazon": "2026-11-27T13:36:01.047201+00:00"
+        "amazon": "2026-11-27T23:56:46.886066+00:00"
       },
       "lowest_price": 179.99,
       "lowest_at": "amazon",
@@ -131,26 +131,26 @@
     "storage": {
       "newegg": 665.0,
       "microcenter": 649.99,
-      "amazon": 964.14,
+      "amazon": 970.0,
       "fetched_at": {
         "microcenter": "2026-11-25T13:59:49.520977+00:00",
-        "amazon": "2026-11-27T13:36:01.047201+00:00"
+        "amazon": "2026-11-27T23:56:46.886066+00:00"
       },
-      "lowest_price": 649.99,
-      "lowest_at": "microcenter",
+      "lowest_price": 970.0,
+      "lowest_at": "amazon",
       "stale": false,
       "previous_lowest": 649.99,
-      "movement": "flat"
+      "movement": "up"
     },
     "storage_2tb": {
       "microcenter": 349.99,
-      "amazon": 419.0,
+      "amazon": 418.99,
       "pricify": 349.99,
       "pricify_store": "Micro Center (in store)",
       "pricify_url": "https://ssd.live/ssds/western-digital-wd_black-sn850x-2tb-m2-2280-nvme-pcie-40",
       "fetched_at": {
         "microcenter": "2026-11-27T13:36:01.047201+00:00",
-        "amazon": "2026-11-27T13:36:01.047201+00:00",
+        "amazon": "2026-11-27T23:56:46.886066+00:00",
         "pricify": "2026-11-16T04:59:59+00:00"
       },
       "lowest_price": 349.99,
@@ -182,7 +182,7 @@
       "pricify_url": "https://psu.live/psus/corsair-rme-1000w-80-gold-fully-modular",
       "fetched_at": {
         "microcenter": "2026-11-25T00:27:24.025485+00:00",
-        "amazon": "2026-11-27T13:36:01.047201+00:00",
+        "amazon": "2026-11-27T23:56:46.886066+00:00",
         "pricify": "2026-11-23T04:59:59+00:00"
       },
       "lowest_price": 121.59,

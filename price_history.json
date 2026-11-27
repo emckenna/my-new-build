@@ -1190,7 +1190,7 @@
     {
       "date": "2026-11-27",
       "microcenter": 399.99,
-      "amazon": 444.99,
+      "amazon": 442.99,
       "pricify": 399.99,
       "lowest": 399.99
     }
@@ -5671,9 +5671,8 @@
     },
     {
       "date": "2026-11-27",
-      "microcenter": 649.99,
-      "amazon": 964.14,
-      "lowest": 649.99
+      "amazon": 970.0,
+      "lowest": 970.0
     }
   ],
   "case": [
@@ -8110,7 +8109,7 @@
     {
       "date": "2026-11-27",
       "microcenter": 349.99,
-      "amazon": 419.0,
+      "amazon": 418.99,
       "lowest": 349.99
     }
   ],
